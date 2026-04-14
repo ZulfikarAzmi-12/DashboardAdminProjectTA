@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../routes/app_routes.dart';
 
 class SplashController extends GetxController {
@@ -9,10 +10,15 @@ class SplashController extends GetxController {
   }
 
   void _startSplashScreen() async {
-    // Tunggu selama 3 detik
-    await Future.delayed(const Duration(seconds: 3));
-    
-    // Pindah ke halaman login dan hapus splash dari history (agar tidak bisa back)
-    Get.offAllNamed(AppRoutes.login);
+    await Future.delayed(const Duration(seconds: 5));
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("accessToken");
+
+    if (token == null || token.isEmpty) {
+      Get.offAllNamed(AppRoutes.login);
+    } else {
+      Get.offAllNamed(AppRoutes.home);
+    }
   }
 }

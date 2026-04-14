@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.white,
+      backgroundColor: AppColor.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
               LoginTextField(
                 hintText: 'example@gmail.com',
                 prefixIcon: Icons.email_outlined,
-                controller: authController.emailController,
+                controller: authController.usernameController,
               ),
 
               // Input Password
@@ -58,7 +58,7 @@ class LoginPage extends StatelessWidget {
                   authController.login();
                 },
               ),
-              
+
               // Bagian "Belum punya akun" sudah dihapus dari sini
             ],
           ),

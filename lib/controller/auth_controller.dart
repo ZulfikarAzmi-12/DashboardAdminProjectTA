@@ -1,28 +1,61 @@
+import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   // Buat controller untuk menampung input teks
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() {
-    String email = emailController.text;
-    String pass = passwordController.text;
-    
-    if (email.isNotEmpty && pass.isNotEmpty) {
-      print("Proses Login dengan: $email");
-      // Tambahkan logika koneksi ke API Laravel kamu di sini
-    } else {
-      Get.snackbar("Error", "Email dan Password harus diisi",
-          backgroundColor: Colors.red, colorText: Colors.white);
+  final AuthService _authService = AuthService();
+
+  void login() async {
+    try {
+      String username = usernameController.text.toString();
+      String password = passwordController.text.toString();
+
+      final result = await _authService.login(username, password);
+      print(result);
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("accesToken", result.data.accesToken);
+
+      Get.snackbar(
+        "Success",
+        result.message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on AppError catch (e) {
+      String message = e.message;
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"]; // ambil error pertama
+      }
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
-  
+
   @override
   void onClose() {
     // Bersihkan memori saat controller tidak dipakai
-    emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.onClose();
   }
