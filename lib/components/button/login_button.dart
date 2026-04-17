@@ -16,7 +16,6 @@ class DefaultButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          // SEKARANG PAKAI INI:
           backgroundColor: AppColor.primary, 
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
