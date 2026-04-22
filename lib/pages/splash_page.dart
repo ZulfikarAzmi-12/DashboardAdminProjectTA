@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class SplashPage extends StatelessWidget {
         child: Icon(
           Icons.inventory_2_outlined, // Logo kotak yang mirip di gambar
           size: 100,
-          color: Color(0xFF8B2323),
+          color: AppColor.primary,
         ),
       ),
     );

@@ -1,10 +1,11 @@
 import 'package:admin_dashboard/binding/home_binding.dart';
+import 'package:admin_dashboard/binding/inventaris_binding.dart';
 import 'package:admin_dashboard/binding/navbar_binding.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
 import 'package:admin_dashboard/pages/login_page.dart';
-import 'package:admin_dashboard/pages/main_pages.dart';
+import 'package:admin_dashboard/pages/main_page.dart';
 import 'package:admin_dashboard/pages/splash_page.dart';
 import 'package:admin_dashboard/pages/userlist_page.dart';
 import 'package:get/get.dart'; // Sesuaikan dengan nama file login kamu
@@ -26,7 +27,8 @@ class AppPages {
     page: () => MainPage(),
     bindings: [
       NavbarBinding(),
-      HomeBinding()
+      HomeBinding(),
+      InventarisBinding()
     ]
     ),
     GetPage(
@@ -37,6 +39,7 @@ class AppPages {
     GetPage(
     name: AppRoutes.inventaris,
     page: () => InventarisPage(),
+    binding: InventarisBinding()
     ),
     GetPage(
     name: AppRoutes.laporan,

@@ -1,5 +1,5 @@
-import 'package:admin_dashboard/models/loan_models.dart';
-import 'package:admin_dashboard/services/home_services.dart';
+import 'package:admin_dashboard/models/loan_model.dart';
+import 'package:admin_dashboard/services/home_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

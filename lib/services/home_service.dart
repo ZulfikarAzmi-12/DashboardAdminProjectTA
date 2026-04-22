@@ -1,4 +1,4 @@
-import 'package:admin_dashboard/models/loan_models.dart';
+import 'package:admin_dashboard/models/loan_model.dart';
 
 class HomeService {
   Future<List<LoanModel>> fetchLoans() async {

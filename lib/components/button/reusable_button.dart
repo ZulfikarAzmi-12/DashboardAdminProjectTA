@@ -6,43 +6,39 @@ class ReusableButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onTap;
 
-  ReusableButton({
+  const ReusableButton({
     super.key,
     required this.text,
     required this.icon,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: ElevatedButton(
-          onPressed: null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.primary,
-            padding: EdgeInsets.symmetric(vertical: 14),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(12)
-            ),
-            elevation: 0
-          ),
-          child: Row(
-            children: [
-              Icon(icon, color: AppColor.white),
-              Container(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    color: AppColor.white,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-              )
-            ],
-          ),
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColor.primary,
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
-      ) 
+        elevation: 0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: AppColor.white, size: 18),
+          Container(margin: const EdgeInsets.only(left: 8)),
+          Text(
+            text,
+            style: const TextStyle(
+              color: AppColor.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
