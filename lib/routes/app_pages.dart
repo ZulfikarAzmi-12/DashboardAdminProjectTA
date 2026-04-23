@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/binding/home_binding.dart';
 import 'package:admin_dashboard/binding/inventaris_binding.dart';
 import 'package:admin_dashboard/binding/navbar_binding.dart';
+import 'package:admin_dashboard/binding/report_binding.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
@@ -28,7 +29,8 @@ class AppPages {
     bindings: [
       NavbarBinding(),
       HomeBinding(),
-      InventarisBinding()
+      InventarisBinding(),
+      ReportBinding()
     ]
     ),
     GetPage(
@@ -43,7 +45,8 @@ class AppPages {
     ),
     GetPage(
     name: AppRoutes.laporan,
-    page: () => LaporanPage(),
+    page: () => ReportPage(),
+    binding: ReportBinding()  
     ),
     GetPage(
     name: AppRoutes.userList,

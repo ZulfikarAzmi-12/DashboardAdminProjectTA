@@ -1,12 +1,12 @@
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:flutter/material.dart';
 
-class InventearisChip extends StatelessWidget {
+class InventarisChip extends StatelessWidget {
   final String title;
   final bool isSelected;
   final VoidCallback onTap;
   
-  const InventearisChip({
+  const InventarisChip({
     super.key,
     required this.title,
     required this.isSelected,

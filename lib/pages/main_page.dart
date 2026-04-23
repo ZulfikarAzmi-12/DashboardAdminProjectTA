@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/components/navbar/reusable_navbar.dart';
+import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/navbar_controller.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
@@ -15,13 +16,14 @@ class MainPage extends StatelessWidget {
   final pages = [
     HomePage(),
     InventarisPage(),
-    LaporanPage(),
+    ReportPage(),
     UserlistPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
       body: Obx(() => pages[navbarController.selectedIndex.value]),
       bottomNavigationBar: ReusableNavbar(),
     );

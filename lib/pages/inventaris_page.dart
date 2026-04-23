@@ -1,6 +1,6 @@
 import 'package:admin_dashboard/components/button/reusable_button.dart';
 import 'package:admin_dashboard/components/card/inventaris_card.dart';
-import 'package:admin_dashboard/components/chip/inventearis_chip.dart';
+import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
 import 'package:admin_dashboard/components/search/search_field.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/inventaris_controller.dart';
@@ -65,7 +65,7 @@ class InventarisPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  return Obx(() => InventearisChip(
+                  return Obx(() => InventarisChip(
                         title: categories[index],
                         isSelected: controller.selectedCategory.value ==
                             categories[index],
