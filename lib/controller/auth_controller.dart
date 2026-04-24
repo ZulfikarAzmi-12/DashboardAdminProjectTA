@@ -1,11 +1,11 @@
 import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:admin_dashboard/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
-  // Buat controller untuk menampung input teks
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -17,8 +17,6 @@ class AuthController extends GetxController {
       String password = passwordController.text.toString();
 
       final result = await _authService.login(username, password);
-      print(result);
-
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("accesToken", result.data.accesToken);
 
@@ -29,6 +27,7 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+      Get.offNamed(AppRoutes.main);
     } on AppError catch (e) {
       String message = e.message;
       if (e.errors != null && e.errors!.isNotEmpty) {

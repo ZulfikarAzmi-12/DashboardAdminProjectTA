@@ -13,7 +13,7 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(seconds: 5));
 
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("accessToken");
+    final token = prefs.getString("accesToken");
 
     if (token == null || token.isEmpty) {
       Get.offAllNamed(AppRoutes.login);

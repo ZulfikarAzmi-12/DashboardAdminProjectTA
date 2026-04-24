@@ -7,7 +7,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -20,8 +19,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      initialRoute: AppRoutes.main,
-      getPages: AppPages.pages
+      initialRoute: AppRoutes.splash,
+      getPages: AppPages.pages,
     );
   }
 }

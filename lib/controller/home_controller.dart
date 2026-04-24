@@ -1,12 +1,13 @@
+import 'package:admin_dashboard/models/error_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
 import 'package:admin_dashboard/services/home_service.dart';
-import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final HomeService service = HomeService();
 
-  /// 🔥 STATE
-  var loans = <LoanModel>[].obs;
+  var loans = <LoanData>[].obs;
   var isLoading = false.obs;
   var isError = false.obs;
   var errorMessage = ''.obs;
@@ -17,17 +18,33 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  /// 🔥 FETCH DATA (siap API)
   void fetchLoans() async {
     isLoading.value = true;
     isError.value = false;
 
     try {
-      final result = await service.fetchLoans();
+      final result = await service.getLoans();
       loans.value = result;
+    } on AppError catch (e) {
+      String message = e.message;
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      isError.value = true;
-      errorMessage.value = e.toString();
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
 
     isLoading.value = false;
