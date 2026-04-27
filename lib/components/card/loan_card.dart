@@ -21,6 +21,7 @@ class LoanCard extends StatelessWidget {
         return AppColor.gray;
       case "terlambat":
       case "Terlambat":
+      case "ditolak":
         return AppColor.terlambat;
       default:
         return AppColor.gray;

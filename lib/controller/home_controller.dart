@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/models/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
@@ -11,10 +12,12 @@ class HomeController extends GetxController {
   var isLoading = false.obs;
   var isError = false.obs;
   var errorMessage = ''.obs;
+  var summary = Rxn<SummaryModel>();
 
   @override
   void onInit() {
     fetchLoans();
+    fetchSummary();
     super.onInit();
   }
 
@@ -48,5 +51,33 @@ class HomeController extends GetxController {
     }
 
     isLoading.value = false;
+  }
+
+  void fetchSummary() async {
+    try {
+      final result = await service.getSummary();
+      summary.value = result;
+    } on AppError catch (e) {
+      String message = e.message;
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 }

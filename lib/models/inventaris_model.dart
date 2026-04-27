@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-// ================= MODEL =================
-
 class InventarisModel {
   final String name;
   final int stock;

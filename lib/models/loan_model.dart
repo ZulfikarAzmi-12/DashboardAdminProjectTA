@@ -1,26 +1,3 @@
-class LoanResponse {
-  final String status;
-  final int statusCode;
-  final String message;
-  final List<LoanData> data;
-
-  LoanResponse({
-    required this.status,
-    required this.statusCode,
-    required this.message,
-    required this.data,
-  });
-
-  factory LoanResponse.fromJson(Map<String, dynamic> json) {
-    return LoanResponse(
-      status: json['status'],
-      statusCode: json['statusCode'],
-      message: json['message'],
-      data: (json['data'] as List).map((e) => LoanData.fromJson(e)).toList(),
-    );
-  }
-}
-
 class LoanData {
   final String id;
   final String loanCode;

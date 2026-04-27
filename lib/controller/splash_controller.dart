@@ -14,11 +14,15 @@ class SplashController extends GetxController {
 
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString("accesToken");
+    final role = prefs.getString("role");
 
-    if (token == null || token.isEmpty) {
+    final isLoggedIn = token != null && token.isNotEmpty;
+    final isAdmin = role == 'admin';
+
+    if (!isLoggedIn || !isAdmin) {
       Get.offAllNamed(AppRoutes.login);
     } else {
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.main);
     }
   }
 }

@@ -19,6 +19,17 @@ class AuthController extends GetxController {
       final result = await _authService.login(username, password);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("accesToken", result.data.accesToken);
+      await prefs.setString("role", result.data.role);
+
+      if (result.data.role != 'admin') {
+        Get.snackbar(
+          "Error",
+          "Kamu bukan admin",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
 
       Get.snackbar(
         "Success",

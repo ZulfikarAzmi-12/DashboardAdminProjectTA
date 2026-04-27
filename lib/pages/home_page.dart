@@ -18,25 +18,20 @@ class HomePage extends StatelessWidget {
 
       body: SafeArea(
         child: Obx(() {
-          /// LOADING
           if (controller.isLoading.value) {
             return Center(child: CircularProgressIndicator());
           }
 
-          /// ERROR
           if (controller.isError.value) {
             return Center(child: Text("Terjadi kesalahan"));
           }
 
-          /// CONTENT
           return SingleChildScrollView(
-            child: Container(
+            child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  /// 🔥 HEADER
                   Text(
                     "Ringkasan",
                     style: TextStyle(
@@ -45,51 +40,41 @@ class HomePage extends StatelessWidget {
                       color: AppColor.primary,
                     ),
                   ),
+                  SizedBox(height: 16),
 
-                  /// 🔥 SUMMARY ROW 1
-                  Container(
-                    margin: EdgeInsets.only(top: 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: SummaryCard(
-                            title: "Total Barang",
-                            value: "350",
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 12),
-                            child: SummaryCard(
-                              title: "Dipinjam",
-                              value: "10",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  /// 🔥 SUMMARY ROW 2
-                  Row(
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
                     children: [
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          margin: EdgeInsets.only(top: 12),
-                          child: SummaryCard(
-                            title: "Barang Rusak",
-                            value: "5",
-                          ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width - 44) / 2,
+                        child: SummaryCard(
+                          title: "Total Barang",
+                          value:
+                              "${controller.summary.value?.totalItem ?? "0"}",
                         ),
                       ),
-                      Expanded(flex: 1, child: Container()),
+
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width - 44) / 2,
+                        child: SummaryCard(
+                          title: "Dipinjam",
+                          value:
+                              "${controller.summary.value?.borrowedItem ?? "0"}",
+                        ),
+                      ),
+
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width - 32) / 2,
+                        child: SummaryCard(
+                          title: "Barang Rusak",
+                          value:
+                              "${controller.summary.value?.damagedItem ?? "0"}",
+                        ),
+                      ),
                     ],
                   ),
 
-                  /// 🔥 BUTTON
                   Container(
                     margin: EdgeInsets.only(top: 16),
                     child: Row(
@@ -114,8 +99,6 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  /// 🔥 TITLE LIST
                   Container(
                     margin: EdgeInsets.only(top: 24),
                     child: Text(
@@ -127,25 +110,25 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  /// 🔥 EMPTY STATE
                   if (controller.loans.isEmpty)
                     Container(
                       margin: EdgeInsets.only(top: 20),
-                      child: Center(
-                        child: Text("Belum ada data"),
-                      ),
+                      alignment: Alignment.center,
+                      child: Text("Belum ada data"),
+                    )
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: controller.loans.length,
+                      itemBuilder: (context, index) {
+                        final loan = controller.loans[index];
+
+                        return LoanCard(data: loan);
+                      },
                     ),
 
-                  /// 🔥 LIST DATA (TANPA LISTVIEW)
-                  ...controller.loans.map((loan) {
-                    return LoanCard(data: loan);
-                  }).toList(),
-
-                  /// 🔥 SPACING BAWAH
-                  Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
