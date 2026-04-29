@@ -5,12 +5,12 @@ class InventarisChip extends StatelessWidget {
   final String title;
   final bool isSelected;
   final VoidCallback onTap;
-  
+
   const InventarisChip({
     super.key,
     required this.title,
     required this.isSelected,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
@@ -18,16 +18,24 @@ class InventarisChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.primary : Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColor.primary.withOpacity(0.5)),
+          color: isSelected
+              ? AppColor.primary
+              : const Color(0xFFF2F2F2), // abu muda seperti gambar
+          borderRadius: BorderRadius.circular(40),
+          border: Border.all(
+            color: AppColor.primary,
+            width: 2, // lebih tegas seperti di gambar
+          ),
         ),
         child: Text(
           title,
           style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
             color: isSelected ? Colors.white : AppColor.primary,
           ),
         ),

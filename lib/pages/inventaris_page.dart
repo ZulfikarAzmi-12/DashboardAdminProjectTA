@@ -12,19 +12,14 @@ class InventarisPage extends StatelessWidget {
 
   final controller = Get.find<InventarisController>();
 
-  final List<String> categories = [
-    "All",
-    "Elektronik",
-    "Fotografi",
-    "Mesin"
-  ];
+  final List<String> categories = ["All", "Elektronik", "Fotografi", "Mesin"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             // ================= TOP BUTTON =================
             Container(
@@ -32,22 +27,13 @@ class InventarisPage extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: ReusableButton(
-                      text: "Kelola Lokasi",
-                      icon: Icons.location_on,
-                      onTap: () {
-                        // TODO: Navigate
-                      },
-                    ),
+                    child: ReusableButton(text: "Kelola Lokasi", onTap: () {}),
                   ),
-                  Container(width: 12),
+                  const SizedBox(width: 15),
                   Expanded(
                     child: ReusableButton(
                       text: "Kelola Kategori",
-                      icon: Icons.category,
-                      onTap: () {
-                        // TODO: Navigate
-                      },
+                      onTap: () {},
                     ),
                   ),
                 ],
@@ -60,53 +46,51 @@ class InventarisPage extends StatelessWidget {
             // ================= CATEGORY CHIP =================
             Container(
               margin: const EdgeInsets.only(top: 12, left: 16),
-              height: 40,
+              height: 52,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  return Obx(() => InventarisChip(
-                        title: categories[index],
-                        isSelected: controller.selectedCategory.value ==
-                            categories[index],
-                        onTap: () {
-                          controller.selectedCategory.value =
-                              categories[index];
-                        },
-                      ));
+                  return Obx(
+                    () => InventarisChip(
+                      title: categories[index],
+                      isSelected:
+                          controller.selectedCategory.value ==
+                          categories[index],
+                      onTap: () {
+                        controller.selectedCategory.value = categories[index];
+                      },
+                    ),
+                  );
                 },
               ),
             ),
 
+            const SizedBox(height: 12),
+
             // ================= LIST =================
-            Expanded(
-              child: Obx(() {
-                if (controller.isLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+            Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                if (controller.filteredItems.isEmpty) {
-                  return const Center(
-                    child: Text("Data tidak ditemukan"),
-                  );
-                }
+              if (controller.filteredItems.isEmpty) {
+                return const Center(child: Text("Data tidak ditemukan"));
+              }
 
-                return ListView.builder(
-                  itemCount: controller.filteredItems.length,
-                  itemBuilder: (context, index) {
-                    final item = controller.filteredItems[index];
-
-                    return InventarisCard(item: item);
-                  },
-                );
-              }),
-            ),
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.filteredItems.length,
+                itemBuilder: (context, index) {
+                  final item = controller.filteredItems[index];
+                  return InventarisCard(item: item);
+                },
+              );
+            }),
           ],
         ),
       ),
-
       // ================= FAB =================
       floatingActionButton: Container(
         margin: const EdgeInsets.only(bottom: 20, right: 10),

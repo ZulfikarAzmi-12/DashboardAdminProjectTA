@@ -28,16 +28,16 @@ class HomePage extends StatelessWidget {
 
           return SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Ringkasan",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: AppColor.primary,
+                      color: AppColor.blacktext,
                     ),
                   ),
                   SizedBox(height: 16),
@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(top: 16),
+                    margin: EdgeInsets.only(top: 15),
                     child: Row(
                       children: [
                         Expanded(
@@ -100,14 +100,43 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 24),
-                    child: Text(
-                      "Daftar Peminjaman",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.primary,
-                      ),
+                    margin: EdgeInsets.only(top: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Peminjaman",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.blacktext,
+                          ),
+                        ),
+
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed("/all-loans");
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "Lihat Semua",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.primary,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 14,
+                                color: AppColor.primary,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   if (controller.loans.isEmpty)

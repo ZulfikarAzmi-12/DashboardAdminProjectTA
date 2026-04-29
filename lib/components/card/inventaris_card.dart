@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 class InventarisCard extends StatelessWidget {
   final InventarisModel item;
 
-  const InventarisCard({
-    super.key,
-    required this.item
-  });
+  const InventarisCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +43,13 @@ class InventarisCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.primary)),
+                  Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.primary,
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 4),
                     child: Text("Unit Tersedia : ${item.stock}"),
@@ -63,11 +63,11 @@ class InventarisCard extends StatelessWidget {
                         _tag(null, item.category),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -82,10 +82,8 @@ class InventarisCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (icon != null)
-            Icon(icon, size: 14, color: Colors.white),
-          if (icon != null)
-            Container(margin: const EdgeInsets.only(right: 4)),
+          if (icon != null) Icon(icon, size: 14, color: Colors.white),
+          if (icon != null) Container(margin: const EdgeInsets.only(right: 4)),
           Text(text, style: const TextStyle(color: Colors.white)),
         ],
       ),

@@ -5,11 +5,7 @@ class SummaryCard extends StatelessWidget {
   final String title;
   final String value;
 
-  const SummaryCard({
-    super.key,
-    required this.title,
-    required this.value,
-  });
+  const SummaryCard({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class SummaryCard extends StatelessWidget {
             blurRadius: 4,
             color: AppColor.blacktext,
             offset: Offset(0, 2),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -33,17 +29,18 @@ class SummaryCard extends StatelessWidget {
             title,
             style: TextStyle(
               color: AppColor.gray,
-              fontSize: 13,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
           ),
 
           /// spacing pakai margin
           Container(
-            margin: EdgeInsets.only(top: 6),
+            margin: EdgeInsets.only(top: 5),
             child: Text(
               value,
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: AppColor.primary,
               ),
