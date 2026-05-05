@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/button/home_button.dart';
 import 'package:admin_dashboard/components/card/loan_card.dart';
 import 'package:admin_dashboard/components/card/summary_card.dart';
@@ -15,7 +16,17 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
-
+      appBar: CustomAppBar(
+        title: "Home Admin",
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications_none, color: AppColor.primary),
+            onPressed: () {
+              
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
@@ -90,8 +101,8 @@ class HomePage extends StatelessWidget {
                           child: Container(
                             margin: EdgeInsets.only(left: 12),
                             child: HomeButton(
-                              text: "Pinjam Barang",
-                              icon: Icons.inventory_2_outlined,
+                              text: "Kelola User",
+                              icon: Icons.person,
                               onPressed: () {},
                             ),
                           ),

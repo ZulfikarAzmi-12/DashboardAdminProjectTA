@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/button/reusable_button.dart';
 import 'package:admin_dashboard/components/card/inventaris_card.dart';
 import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
@@ -18,6 +19,17 @@ class InventarisPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
+      appBar: CustomAppBar(
+        title: "Inventaris",
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications_none, color: AppColor.primary),
+            onPressed: () {
+              
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: ListView(
           children: [
