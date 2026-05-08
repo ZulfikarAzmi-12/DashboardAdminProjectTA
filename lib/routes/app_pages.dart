@@ -1,14 +1,28 @@
+import 'package:admin_dashboard/binding/add_inventory_binding.dart';
+import 'package:admin_dashboard/binding/category_binding.dart';
+import 'package:admin_dashboard/binding/changepassword_binding.dart';
 import 'package:admin_dashboard/binding/home_binding.dart';
 import 'package:admin_dashboard/binding/inventaris_binding.dart';
+import 'package:admin_dashboard/binding/location_binding.dart';
+import 'package:admin_dashboard/binding/manageuser_binding.dart';
 import 'package:admin_dashboard/binding/navbar_binding.dart';
+import 'package:admin_dashboard/binding/notification_binding.dart';
+import 'package:admin_dashboard/binding/profile_binding.dart';
 import 'package:admin_dashboard/binding/report_binding.dart';
+import 'package:admin_dashboard/pages/add_inventory_page.dart';
+import 'package:admin_dashboard/pages/add_user_page.dart';
+import 'package:admin_dashboard/pages/category_page.dart';
+import 'package:admin_dashboard/pages/change_password_page.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
+import 'package:admin_dashboard/pages/location_page.dart';
 import 'package:admin_dashboard/pages/login_page.dart';
 import 'package:admin_dashboard/pages/main_page.dart';
+import 'package:admin_dashboard/pages/manage_user_page.dart';
+import 'package:admin_dashboard/pages/notification_page.dart';
 import 'package:admin_dashboard/pages/splash_page.dart';
-import 'package:admin_dashboard/pages/userlist_page.dart';
+import 'package:admin_dashboard/pages/profile_page.dart';
 import 'package:get/get.dart'; // Sesuaikan dengan nama file login kamu
 import 'app_routes.dart';
 
@@ -49,8 +63,45 @@ class AppPages {
     binding: ReportBinding()  
     ),
     GetPage(
-    name: AppRoutes.userList,
-    page: () => UserlistPage(),
+    name: AppRoutes.profile,
+    page: () => ProfilePage(),
+    binding: ProfileBinding()
     ),
+    GetPage(
+    name: AppRoutes.changePassword,
+    page: () => ChangePasswordPage(),
+    binding: ChangepasswordBinding()
+    ),
+    GetPage(
+    name: AppRoutes.manageUser,
+    page: () => ManageuserPage(),
+    binding: ManageuserBinding()
+    ),
+    GetPage(
+    name: AppRoutes.addUser,
+    page: () => AddUserPage(),
+    binding: ManageuserBinding()
+    ),
+    GetPage(
+    name: AppRoutes.addInventory,
+    page: () => AddInventoryPage(),
+    binding: AddInventoryBinding()
+    ),
+    GetPage(
+    name: AppRoutes.notification,
+    page: () => NotificationPage(),
+    binding: NotificationBinding()
+    ),
+    GetPage(
+    name: AppRoutes.location,
+    page: () => LocationPage(),
+    binding: LocationBinding()
+    ),
+    GetPage(
+    name: AppRoutes.category,
+    page: () => CategoryPage(),
+    binding: CategoryBinding()
+    ),
+    
   ];
 }

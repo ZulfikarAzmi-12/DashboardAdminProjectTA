@@ -1,8 +1,9 @@
+import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/card/report_card.dart';
 import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
-import 'package:admin_dashboard/components/navbar/reusable_navbar.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/report_controller.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,20 +18,31 @@ class ReportPage extends StatelessWidget {
     "Diproses",
     "Selesai",
   ];
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
+      appBar: CustomAppBar(
+        title: "Inventaris",  
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications_none, color: AppColor.primary),
+            onPressed: () {
+                Get.toNamed(AppRoutes.notification);
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ================= TITLE =================
-            Container(
-              margin: const EdgeInsets.only(left: 16, top: 16, bottom: 12),
-              child: const Text(
+            // ================= TITLE ============ =====
+            const Padding(
+              padding: EdgeInsets.only(left: 16, top: 16, bottom: 12),
+              child: Text(
                 "Laporan Kerusakan",
                 style: TextStyle(
                   fontSize: 22,
@@ -40,11 +52,12 @@ class ReportPage extends StatelessWidget {
             ),
 
             // ================= FILTER CHIP =================
-            Container(
-              margin: const EdgeInsets.only(left: 16),
-              height: 40,
+            SizedBox(
+              height: 56, // ✅ FIX: sebelumnya 40 (terlalu kecil)
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                physics: const BouncingScrollPhysics(),
                 itemCount: filters.length,
                 itemBuilder: (context, index) {
                   return Obx(() => InventarisChip(
@@ -58,6 +71,8 @@ class ReportPage extends StatelessWidget {
                 },
               ),
             ),
+
+            const SizedBox(height: 10),
 
             // ================= LIST =================
             Expanded(
@@ -79,7 +94,6 @@ class ReportPage extends StatelessWidget {
                   itemCount: controller.filteredReports.length,
                   itemBuilder: (context, index) {
                     final item = controller.filteredReports[index];
-
                     return ReportCard(data: item);
                   },
                 );

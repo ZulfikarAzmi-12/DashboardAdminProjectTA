@@ -5,6 +5,12 @@ class AppRoutes {
   static const home = '/home';
   static const inventaris = '/inventaris';
   static const laporan = '/laporan';
-  static const userList = '/userList';
-
+  static const profile = '/profile';
+  static const changePassword = '/changePassword';
+  static const manageUser = '/manageUser';
+  static const addUser = '/addUser';
+  static const addInventory = '/addInventory';
+  static const notification = '/notification';
+  static const location = '/location';
+  static const category = '/category';
 }

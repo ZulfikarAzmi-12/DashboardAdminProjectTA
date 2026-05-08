@@ -1,10 +1,12 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
+import 'package:admin_dashboard/components/button/custom_fab.dart';
 import 'package:admin_dashboard/components/button/reusable_button.dart';
 import 'package:admin_dashboard/components/card/inventaris_card.dart';
 import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
 import 'package:admin_dashboard/components/search/search_field.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/inventaris_controller.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +27,7 @@ class InventarisPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.notifications_none, color: AppColor.primary),
             onPressed: () {
-              
+              Get.toNamed(AppRoutes.notification);
             },
           ),
         ],
@@ -39,13 +41,17 @@ class InventarisPage extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: ReusableButton(text: "Kelola Lokasi", onTap: () {}),
+                    child: ReusableButton(text: "Kelola Lokasi", onTap: () {
+                      Get.toNamed(AppRoutes.location);
+                    }),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
                     child: ReusableButton(
                       text: "Kelola Kategori",
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.category);
+                      },
                     ),
                   ),
                 ],
@@ -104,19 +110,11 @@ class InventarisPage extends StatelessWidget {
         ),
       ),
       // ================= FAB =================
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(bottom: 20, right: 10),
-        child: FloatingActionButton(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(color: AppColor.primary.withOpacity(0.5)),
-          ),
-          onPressed: () {
-            // TODO: Tambah barang
-          },
-          child: const Icon(Icons.add, color: AppColor.primary),
-        ),
+      floatingActionButton: CustomFAB(
+        onPressed: () {
+          Get.toNamed(AppRoutes.addInventory);
+        }, 
+        icon: Icons.add
       ),
     );
   }

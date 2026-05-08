@@ -14,7 +14,7 @@ class InventarisService {
           "stock": 5,
           "location": "Gudang A",
           "category": "Fotografi",
-          "image": "https://via.placeholder.com/150",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSBVIfC_KX-xaAzdYRpP_4agrjnSZezBju7g&s",
         },
       )
     };

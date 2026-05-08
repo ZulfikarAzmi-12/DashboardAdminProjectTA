@@ -20,21 +20,23 @@ class InventarisChip extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(right: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColor.primary
-              : const Color(0xFFF2F2F2), // abu muda seperti gambar
+              : const Color(0xFFF2F2F2),
           borderRadius: BorderRadius.circular(40),
           border: Border.all(
             color: AppColor.primary,
-            width: 2, // lebih tegas seperti di gambar
+            width: 2,
           ),
         ),
         child: Text(
           title,
+          maxLines: 1, // ✅ biar tidak turun
+          overflow: TextOverflow.clip, // ✅ tidak kepotong aneh
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
             color: isSelected ? Colors.white : AppColor.primary,
           ),

@@ -4,7 +4,7 @@ import 'package:admin_dashboard/controller/navbar_controller.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
-import 'package:admin_dashboard/pages/userlist_page.dart';
+import 'package:admin_dashboard/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
     HomePage(),
     InventarisPage(),
     ReportPage(),
-    UserlistPage(),
+    ProfilePage(),
   ];
 
   @override

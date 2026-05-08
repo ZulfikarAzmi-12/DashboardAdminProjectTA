@@ -11,4 +11,5 @@ class AppColor {
   static const Color dipinjam = Colors.green;
   static const Color terlambat = Colors.redAccent;
   static const Color blue = Colors.blue;
+  static const Color lightgray = Color.fromARGB(255, 196, 196, 196);
 }

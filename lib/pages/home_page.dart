@@ -3,6 +3,7 @@ import 'package:admin_dashboard/components/button/home_button.dart';
 import 'package:admin_dashboard/components/card/loan_card.dart';
 import 'package:admin_dashboard/components/card/summary_card.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/home_controller.dart';
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.notifications_none, color: AppColor.primary),
             onPressed: () {
-              
+              Get.toNamed(AppRoutes.notification);
             },
           ),
         ],
