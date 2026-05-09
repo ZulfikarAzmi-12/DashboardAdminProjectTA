@@ -3,6 +3,8 @@ import 'package:admin_dashboard/binding/category_binding.dart';
 import 'package:admin_dashboard/binding/changepassword_binding.dart';
 import 'package:admin_dashboard/binding/home_binding.dart';
 import 'package:admin_dashboard/binding/inventaris_binding.dart';
+import 'package:admin_dashboard/binding/list_loan_binding.dart';
+import 'package:admin_dashboard/binding/loan_binding.dart';
 import 'package:admin_dashboard/binding/location_binding.dart';
 import 'package:admin_dashboard/binding/manageuser_binding.dart';
 import 'package:admin_dashboard/binding/navbar_binding.dart';
@@ -16,6 +18,8 @@ import 'package:admin_dashboard/pages/change_password_page.dart';
 import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
+import 'package:admin_dashboard/pages/list_loan_page.dart';
+import 'package:admin_dashboard/pages/loan_form_page.dart';
 import 'package:admin_dashboard/pages/location_page.dart';
 import 'package:admin_dashboard/pages/login_page.dart';
 import 'package:admin_dashboard/pages/main_page.dart';
@@ -101,6 +105,16 @@ class AppPages {
     name: AppRoutes.category,
     page: () => CategoryPage(),
     binding: CategoryBinding()
+    ),
+    GetPage(
+    name: AppRoutes.loan,
+    page: () => LoanFormPage(),
+    binding: LoanBinding()
+    ),
+    GetPage(
+    name: AppRoutes.listLoan,
+    page: () => ListLoanPage(),
+    binding: ListLoanBinding()
     ),
     
   ];

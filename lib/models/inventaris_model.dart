@@ -4,6 +4,7 @@ class InventarisModel {
   final String location;
   final String category;
   final String image;
+  final String status;
 
   InventarisModel({
     required this.name,
@@ -11,6 +12,7 @@ class InventarisModel {
     required this.location,
     required this.category,
     required this.image,
+    required this.status,
   });
 
   factory InventarisModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class InventarisModel {
       location: json['location'] ?? '',
       category: json['category'] ?? '',
       image: json['image'] ?? '',
+      status: json['status'] ?? '',
     );
   }
 }

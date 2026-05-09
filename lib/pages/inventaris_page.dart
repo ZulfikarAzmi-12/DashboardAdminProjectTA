@@ -2,7 +2,7 @@ import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/button/custom_fab.dart';
 import 'package:admin_dashboard/components/button/reusable_button.dart';
 import 'package:admin_dashboard/components/card/inventaris_card.dart';
-import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
+import 'package:admin_dashboard/components/chip/inventaris_chip.dart';
 import 'package:admin_dashboard/components/search/search_field.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/inventaris_controller.dart';

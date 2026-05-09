@@ -1,6 +1,6 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/card/report_card.dart';
-import 'package:admin_dashboard/components/chip/inventeris_chip.dart';
+import 'package:admin_dashboard/components/chip/inventaris_chip.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/report_controller.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';

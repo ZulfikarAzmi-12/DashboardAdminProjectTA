@@ -13,4 +13,6 @@ class AppRoutes {
   static const notification = '/notification';
   static const location = '/location';
   static const category = '/category';
+  static const loan = "/loan";
+  static const listLoan = "/listLoan";
 }
