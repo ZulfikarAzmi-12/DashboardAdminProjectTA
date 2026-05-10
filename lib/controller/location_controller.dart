@@ -1,11 +1,13 @@
 import 'package:admin_dashboard/models/error_model.dart';
-import 'package:admin_dashboard/models/location_model.dart';
+import 'package:admin_dashboard/models/inventaris_model.dart';
+import 'package:admin_dashboard/services/inventaris_service.dart';
 import 'package:admin_dashboard/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LocationController extends GetxController {
   final LocationService service = LocationService();
+  final InventarisService inventarisService = InventarisService();
 
   final locationTextController = TextEditingController();
 
@@ -26,7 +28,7 @@ class LocationController extends GetxController {
     isError.value = false;
 
     try {
-      final result = await service.getLocations();
+      final result = await inventarisService.getLocations();
 
       locationList.value = result;
     } on AppError catch (e) {
@@ -70,7 +72,7 @@ class LocationController extends GetxController {
     locationList[index] = LocationModel(
       id: item.id,
       locationName: item.locationName,
-      isActive: !item.isActive,
+      isActive: item.isActive,
     );
   }
 

@@ -1,83 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomSelector extends StatelessWidget {
+class CustomSelector<T> extends StatelessWidget {
   final RxString selectedValue;
-  final List<String> options;
+  final List<T> options;
   final String hint;
+
+  final String Function(T item) labelBuilder;
+  final String Function(T item) valueBuilder;
 
   const CustomSelector({
     super.key,
     required this.selectedValue,
     required this.options,
     required this.hint,
+    required this.labelBuilder,
+    required this.valueBuilder,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.bottomSheet(
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: options.map((e) => _item(e)).toList(),
-            ),
+    return Obx(
+      () => Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+
+        child: DropdownButton<String>(
+          value: selectedValue.value.isEmpty ? null : selectedValue.value,
+
+          isExpanded: true,
+          underline: const SizedBox(),
+
+          hint: Text(
+            hint,
+            style: const TextStyle(color: Colors.grey, fontSize: 16),
           ),
-        );
-      },
-      child: Obx(
-        () => Container(
-          margin: const EdgeInsets.only(bottom: 14),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          height: 52,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                color: Colors.black.withOpacity(0.05),
-                offset: const Offset(0, 2),
-              )
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                selectedValue.value.isEmpty
-                    ? hint
-                    : selectedValue.value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: selectedValue.value.isEmpty
-                      ? Colors.grey
-                      : Colors.black,
-                ),
-              ),
-              const Icon(Icons.keyboard_arrow_down, size: 20),
-            ],
-          ),
+
+          items: options.map((item) {
+            return DropdownMenuItem<String>(
+              value: valueBuilder(item),
+              child: Text(labelBuilder(item)),
+            );
+          }).toList(),
+
+          onChanged: (value) {
+            if (value != null) {
+              selectedValue.value = value;
+            }
+          },
         ),
       ),
-    );
-  }
-
-  Widget _item(String value) {
-    return ListTile(
-      title: Text(value),
-      onTap: () {
-        selectedValue.value = value;
-        Get.back();
-      },
     );
   }
 }

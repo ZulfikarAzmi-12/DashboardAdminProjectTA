@@ -1,11 +1,13 @@
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/inventaris_model.dart';
 import 'package:admin_dashboard/services/category_service.dart';
+import 'package:admin_dashboard/services/inventaris_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {
   final CategoryService service = CategoryService();
+  final InventarisService inventarisService = InventarisService();
 
   final categoryTextController = TextEditingController();
 
@@ -26,7 +28,7 @@ class CategoryController extends GetxController {
     isError.value = false;
 
     try {
-      final result = await service.getCategorys();
+      final result = await inventarisService.getCategories();
 
       categoryList.value = result;
     } on AppError catch (e) {

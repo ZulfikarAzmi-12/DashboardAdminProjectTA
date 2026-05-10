@@ -8,7 +8,6 @@ import 'package:admin_dashboard/controller/loan_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class LoanFormPage extends StatelessWidget {
   LoanFormPage({super.key});
 
@@ -55,18 +54,18 @@ class LoanFormPage extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              CustomSelector(
+              CustomSelector<String>(
                 selectedValue: controller.selectedBorrower,
                 options: controller.borrowerOptions,
                 hint: 'Peminjam',
+
+                labelBuilder: (item) => item,
+                valueBuilder: (item) => item,
               ),
 
               const SizedBox(height: 4),
 
-              BigButton(
-                title: 'Pinjam',
-                onTap: () {},
-              ),
+              BigButton(title: 'Pinjam', onTap: () {}),
             ],
           ),
         ),

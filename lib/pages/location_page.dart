@@ -61,7 +61,7 @@ class LocationPage extends StatelessWidget {
 
                     return SlideCard(
                       title: item.locationName,
-                      isActive: item.isActive,
+                      isActive: !(item.isActive ?? false),
 
                       actions: [
                         /// EDIT BUTTON
@@ -91,19 +91,19 @@ class LocationPage extends StatelessWidget {
 
                         /// ON OFF BUTTON
                         SlideActionButton(
-                          backgroundColor: item.isActive
+                          backgroundColor: !(item.isActive ?? false)
                               ? const Color(0xff65B741)
                               : const Color(0xffEF4444),
 
                           onTap: () {
                             controller.updateLocation(
                               locationId: item.id,
-                              isActive: !item.isActive,
+                              isActive: !(item.isActive ?? false),
                             );
                           },
 
                           child: Text(
-                            item.isActive ? "ON" : "OFF",
+                            !(item.isActive ?? false) ? "ON" : "OFF",
 
                             style: const TextStyle(
                               color: Colors.white,

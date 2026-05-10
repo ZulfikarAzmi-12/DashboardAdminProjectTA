@@ -4,6 +4,7 @@ import 'package:admin_dashboard/components/imagePicker/image_picker_box.dart';
 import 'package:admin_dashboard/components/textfield/adduser.dart';
 import 'package:admin_dashboard/components/textfield/selector_textfield.dart';
 import 'package:admin_dashboard/controller/add_inventory_controller.dart';
+import 'package:admin_dashboard/models/inventaris_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,14 +24,12 @@ class AddInventoryPage extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
       ),
-      
 
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-
               /// NAMA
               AdduserTextField(
                 hint: "Nama Barang",
@@ -44,17 +43,23 @@ class AddInventoryPage extends StatelessWidget {
               ),
 
               /// CATEGORY
-              CustomSelector(
+              CustomSelector<CategoryModel>(
                 selectedValue: controller.selectedCategory,
                 options: controller.categoryList,
                 hint: "Category",
+
+                labelBuilder: (item) => item.categoryName,
+                valueBuilder: (item) => item.id,
               ),
 
               /// LOCATION
-              CustomSelector(
+              CustomSelector<LocationModel>(
                 selectedValue: controller.selectedLocation,
                 options: controller.locationList,
                 hint: "Location",
+
+                labelBuilder: (item) => item.locationName,
+                valueBuilder: (item) => item.id,
               ),
 
               /// JUMLAH
@@ -67,14 +72,28 @@ class AddInventoryPage extends StatelessWidget {
               const SizedBox(height: 6),
 
               /// IMAGE
-              const ImagePickerBox(),
+              Obx(
+                () => ImagePickerBox(
+                  image: controller.selectedImage.value,
+
+                  onTap: () {
+                    controller.pickImage();
+                  },
+                ),
+              ),
 
               const SizedBox(height: 24),
 
               /// BUTTON
-              BigButton(
-                title: "Tambah",
-                onTap: () {},
+              Obx(
+                () => BigButton(
+                  title: controller.isLoadingCreate.value
+                      ? "Loading..."
+                      : "Tambah",
+                  onTap: () {
+                    controller.createInventory();
+                  },
+                ),
               ),
             ],
           ),

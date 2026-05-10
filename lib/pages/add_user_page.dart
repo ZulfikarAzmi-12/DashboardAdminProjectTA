@@ -49,19 +49,19 @@ class AddUserPage extends StatelessWidget {
             ),
 
             /// ROLE (CUSTOM SELECTOR)
-            CustomSelector(
+            CustomSelector<String>(
               selectedValue: controller.selectedRole,
               hint: "Role",
-              options: ["Admin","User"],
+              options: ["Admin", "User"],
+
+              labelBuilder: (item) => item,
+              valueBuilder: (item) => item,
             ),
 
             const SizedBox(height: 12),
 
             /// BUTTON
-            BigButton(
-              title: "Tambah",
-              onTap: controller.addUser,
-            ),
+            BigButton(title: "Tambah", onTap: controller.addUser),
           ],
         ),
       ),

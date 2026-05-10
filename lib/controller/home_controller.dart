@@ -43,6 +43,7 @@ class HomeController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      print("error rek $e");
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
