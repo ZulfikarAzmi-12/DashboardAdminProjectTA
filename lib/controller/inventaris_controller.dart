@@ -99,7 +99,7 @@ class InventarisController extends GetxController {
     // FILTER CATEGORY
     if (selectedCategory.value != "All") {
       result = result
-          .where((e) => e.category == selectedCategory.value)
+          .where((e) => e.category.categoryName == selectedCategory.value)
           .toList()
           .obs;
     }

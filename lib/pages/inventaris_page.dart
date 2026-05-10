@@ -60,8 +60,11 @@ class InventarisPage extends StatelessWidget {
             ),
 
             // ================= SEARCH =================
-            const SearchField(),
-
+            SearchField(
+              onChanged: (value) {
+                controller.updateSearch(value);
+              },
+            ),
             // ================= CATEGORY CHIP =================
             Container(
               margin: const EdgeInsets.only(top: 12, left: 16),

@@ -2,7 +2,9 @@ import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
-  const SearchField({super.key});
+  final Function(String)? onChanged;
+
+  const SearchField({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +17,17 @@ class SearchField extends StatelessWidget {
         border: Border.all(color: AppColor.primary.withOpacity(0.3)),
       ),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              onChanged: onChanged,
+              decoration: const InputDecoration(
                 hintText: "Cari barang...",
                 border: InputBorder.none,
               ),
             ),
           ),
-          Icon(Icons.search, color: AppColor.primary),
+          const Icon(Icons.search, color: AppColor.primary),
         ],
       ),
     );

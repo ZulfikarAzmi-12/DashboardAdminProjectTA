@@ -56,7 +56,7 @@ class InventarisService {
       final token = prefs.getString("accessToken");
 
       final response = await http.get(
-        Uri.parse(baseUrl),
+        Uri.parse("${baseUrl}/item"),
         headers: {
           "Content-Type": "application/json",
           "ngrok-skip-browser-warning": "true",
