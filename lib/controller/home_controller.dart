@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/home_model.dart';
+import 'package:admin_dashboard/services/loan_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
@@ -7,6 +8,7 @@ import 'package:admin_dashboard/services/home_service.dart';
 
 class HomeController extends GetxController {
   final HomeService service = HomeService();
+  final LoanService loanService = LoanService();
 
   var loans = <LoanData>[].obs;
   var isLoading = false.obs;
@@ -26,8 +28,8 @@ class HomeController extends GetxController {
     isError.value = false;
 
     try {
-      final result = await service.getLoans();
-      loans.value = result;
+      final result = await loanService.getLoans();
+      loans.value = result.take(3).toList();
     } on AppError catch (e) {
       String message = e.message;
       if (e.errors != null && e.errors!.isNotEmpty) {

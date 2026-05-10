@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
 
                         InkWell(
                           onTap: () {
-                            Get.toNamed("/all-loans");
+                            Get.toNamed(AppRoutes.listLoan);
                           },
                           child: Row(
                             children: [

@@ -1,18 +1,11 @@
 import 'package:admin_dashboard/constants/app_color.dart';
-import 'package:admin_dashboard/controller/splash_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class SplashPage extends StatelessWidget {
-  SplashPage({super.key});
-
+  const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    Get.put(SplashController());
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(

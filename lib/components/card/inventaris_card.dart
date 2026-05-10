@@ -3,7 +3,7 @@ import 'package:admin_dashboard/models/inventaris_model.dart';
 import 'package:flutter/material.dart';
 
 class InventarisCard extends StatelessWidget {
-  final InventarisModel item;
+  final InventoryModel item;
 
   const InventarisCard({super.key, required this.item});
 
@@ -32,7 +32,7 @@ class InventarisCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               color: Colors.grey.shade200,
               image: DecorationImage(
-                image: NetworkImage(item.image),
+                image: NetworkImage(item.image.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -52,15 +52,15 @@ class InventarisCard extends StatelessWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 4),
-                    child: Text("Unit Tersedia : ${item.stock}"),
+                    child: Text("Unit Tersedia : ${item.avalibleUnit}"),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 8),
                     child: Row(
                       children: [
-                        _tag(Icons.location_on, item.location),
+                        _tag(Icons.location_on, item.location.locationName),
                         Container(margin: const EdgeInsets.only(left: 8)),
-                        _tag(null, item.category),
+                        _tag(null, item.category.categoryName),
                       ],
                     ),
                   ),

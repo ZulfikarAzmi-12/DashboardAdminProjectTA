@@ -1,6 +1,5 @@
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/navbar_controller.dart';
-import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

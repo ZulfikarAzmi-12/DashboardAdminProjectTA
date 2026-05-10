@@ -10,14 +10,14 @@ class UserService {
         "name": "Roy Suryo",
         "email": "example@gmail.com",
         "phone": "0821-3263-0818",
-        "role": "User"
+        "role": "User",
       },
       {
         "id": 2,
         "name": "Doni Kus",
         "email": "example@gmail.com",
         "phone": "0821-3263-0818",
-        "role": "Admin"
+        "role": "Admin",
       },
     ];
 

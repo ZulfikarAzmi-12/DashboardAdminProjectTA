@@ -1,25 +1,91 @@
+import 'dart:convert';
+
+import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/inventaris_model.dart';
-import 'package:flutter/material.dart';
+import 'package:admin_dashboard/networks/api.network.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class InventarisService {
-  Future<List<InventarisModel>> fetchItems() async {
-    await Future.delayed(const Duration(seconds: 1));
+  final String baseUrl = "${ApiNetwork.BASE_URL}/inventory";
 
-    final response = {
-      "success": true,
-      "data": List.generate(
-        6,
-        (index) => {
-          "name": "Camera canon g7x m5",
-          "stock": 5,
-          "location": "Gudang A",
-          "category": "Fotografi",
-          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSBVIfC_KX-xaAzdYRpP_4agrjnSZezBju7g&s",
+  Future<List<CategoryModel>> getCategories() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      final token = prefs.getString("accessToken");
+
+      final response = await http.get(
+        Uri.parse("$baseUrl/category"),
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+          "Authorization": "Bearer $token",
         },
-      )
-    };
+      );
 
-    final data = response['data'] as List;
-    return data.map((e) => InventarisModel.fromJson(e)).toList();
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && json['status'] == 'success') {
+        return (json['data'] as List)
+            .map((e) => CategoryModel.fromJson(e))
+            .toList();
+      }
+
+      throw AppError(
+        status: json['status'] ?? 'error',
+        statusCode: response.statusCode,
+        message: json['message'] ?? 'Gagal mengambil data category',
+      );
+    } catch (e) {
+      if (e is AppError) rethrow;
+
+      throw AppError(
+        status: 'error',
+        statusCode: 500,
+        message: 'Terjadi kesalahan',
+        error: e,
+      );
+    }
+  }
+
+  Future<List<InventoryModel>> getInventories() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      final token = prefs.getString("accessToken");
+
+      final response = await http.get(
+        Uri.parse(baseUrl),
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && json['status'] == 'success') {
+        return (json['data'] as List)
+            .map((e) => InventoryModel.fromJson(e))
+            .toList();
+      }
+
+      throw AppError(
+        status: json['status'] ?? 'error',
+        statusCode: response.statusCode,
+        message: json['message'] ?? 'Gagal mengambil data inventory',
+      );
+    } catch (e) {
+      if (e is AppError) rethrow;
+
+      throw AppError(
+        status: 'error',
+        statusCode: 500,
+        message: 'Terjadi kesalahan',
+        error: e,
+      );
+    }
   }
 }

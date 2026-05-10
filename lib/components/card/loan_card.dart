@@ -116,7 +116,7 @@ class LoanCard extends StatelessWidget {
                           Icon(Icons.event, size: 14),
                           SizedBox(width: 6),
                           Text(
-                            "${data.returnDate}",
+                            "${data.borrowedDate} - ${data.returnDate}",
                             style: TextStyle(color: AppColor.gray),
                           ),
                         ],

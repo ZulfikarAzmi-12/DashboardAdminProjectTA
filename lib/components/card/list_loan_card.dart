@@ -6,7 +6,6 @@
 import 'package:admin_dashboard/components/button/home_button.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/list_loan_model.dart';
-import 'package:admin_dashboard/models/loan_model.dart';
 import 'package:flutter/material.dart';
 
 class ListLoanCard extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
-import 'package:admin_dashboard/components/card/list_loan_card.dart';
+import 'package:admin_dashboard/components/card/loan_card.dart';
 import 'package:admin_dashboard/components/chip/inventaris_chip.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/list_loan_controller.dart';
@@ -79,7 +79,7 @@ class ListLoanPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final data = controller.filteredLoans[index];
 
-                  return ListLoanCard(data: data);
+                  return LoanCard(data: data);
                 },
               );
             }),

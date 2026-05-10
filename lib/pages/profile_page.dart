@@ -1,17 +1,18 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
-import 'package:admin_dashboard/components/button/big_button.dart';
+import 'package:admin_dashboard/components/button/login_button.dart';
 import 'package:admin_dashboard/components/button/profile_menu.dart';
 import 'package:admin_dashboard/components/card/profile-card.dart';
+import 'package:admin_dashboard/constants/app_color.dart';
+import 'package:admin_dashboard/controller/profile_controller.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../constants/app_color.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
@@ -28,43 +29,47 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // PROFILE CARD
-              const ProfileCard(
-                name: "Surya Setiadi",
-                email: "suryasetiadi@gmail.com",
-              ),
+          child: Obx(() {
+            final profile = controller.profile.value;
 
-              const SizedBox(height: 20),
+            if (profile == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-              // MENU
-              MenuTile(
-                title: "Ganti Password",
-                icon: Icons.lock,
-                onTap: () {
-                  Get.toNamed(AppRoutes.changePassword);
-                },
-              ),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProfileCard(name: profile.username, email: profile.email),
 
-              MenuTile(
-                title: "Kelola User",
-                icon: Icons.person,
-                onTap: () {
-                  Get.toNamed(AppRoutes.manageUser);
-                },
-              ),
+                const SizedBox(height: 20),
 
-              const Spacer(),
+                MenuTile(
+                  title: "Ganti Password",
+                  icon: Icons.lock,
+                  onTap: () {
+                    Get.toNamed(AppRoutes.changePassword);
+                  },
+                ),
 
-              // LOGOUT BUTTON
-              BigButton(
-                title: "Logout",
-                onTap: () {},
-              ),
-            ],
-          ),
+                MenuTile(
+                  title: "Kelola User",
+                  icon: Icons.person,
+                  onTap: () {
+                    Get.toNamed(AppRoutes.manageUser);
+                  },
+                ),
+
+                const Spacer(),
+
+                DefaultButton(
+                  text: "Logout",
+                  onPressed: () {
+                    controller.logout();
+                  },
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );

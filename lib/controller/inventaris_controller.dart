@@ -1,37 +1,100 @@
+import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/inventaris_model.dart';
 import 'package:admin_dashboard/services/inventaris_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InventarisController extends GetxController {
   final InventarisService service = InventarisService();
 
-  var items = <InventarisModel>[].obs;
   var selectedCategory = "All".obs;
-  var searchQuery = "".obs; // 🔥 tambahan
+  var searchQuery = "".obs;
+  var categories = <String>[].obs;
+
+  var inventories = <InventoryModel>[].obs;
+
   var isLoading = false.obs;
+  var isError = false.obs;
+  var errorMessage = ''.obs;
 
   @override
   void onInit() {
-    fetchItems();
+    fetchInventories();
+    fetchCategories();
     super.onInit();
   }
 
-  void fetchItems() async {
+  void fetchCategories() async {
+    isLoading.value = true;
+
     try {
-      isLoading.value = true;
-      final data = await service.fetchItems();
-      items.value = data;
+      final result = await service.getCategories();
+
+      categories.value = ["All", ...result.map((e) => e.categoryName)];
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      // 🔥 nanti bisa kamu ganti snackbar / logger
-      print("Error fetch items: $e");
-    } finally {
-      isLoading.value = false;
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
+
+    isLoading.value = false;
   }
 
-  // 🔥 COMBINED FILTER (category + search)
-  List<InventarisModel> get filteredItems {
-    var result = items;
+  void fetchInventories() async {
+    isLoading.value = true;
+    isError.value = false;
+
+    try {
+      final result = await service.getInventories();
+
+      inventories.value = result;
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    isLoading.value = false;
+  }
+
+  List<InventoryModel> get filteredItems {
+    var result = inventories;
 
     // FILTER CATEGORY
     if (selectedCategory.value != "All") {
@@ -44,9 +107,10 @@ class InventarisController extends GetxController {
     // FILTER SEARCH
     if (searchQuery.value.isNotEmpty) {
       result = result
-          .where((e) => e.name
-              .toLowerCase()
-              .contains(searchQuery.value.toLowerCase()))
+          .where(
+            (e) =>
+                e.name.toLowerCase().contains(searchQuery.value.toLowerCase()),
+          )
           .toList()
           .obs;
     }
@@ -54,7 +118,6 @@ class InventarisController extends GetxController {
     return result;
   }
 
-  // 🔥 helper untuk update search
   void updateSearch(String value) {
     searchQuery.value = value;
   }

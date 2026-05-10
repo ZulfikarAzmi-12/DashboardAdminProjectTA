@@ -5,8 +5,7 @@ class LoginTextField extends StatelessWidget {
   final IconData prefixIcon;
   final bool isPassword;
   final TextEditingController? controller;
-  
-  // Tambahkan parameter ini untuk menghandle status mata password dari luar
+
   final bool obscureText;
   final VoidCallback? onSuffixIconPressed;
 
@@ -16,7 +15,7 @@ class LoginTextField extends StatelessWidget {
     required this.prefixIcon,
     this.isPassword = false,
     this.controller,
-    this.obscureText = true, 
+    this.obscureText = true,
     this.onSuffixIconPressed,
   });
 
@@ -34,8 +33,8 @@ class LoginTextField extends StatelessWidget {
           suffixIcon: isPassword
               ? IconButton(
                   icon: Icon(
-                    obscureText 
-                        ? Icons.visibility_off_outlined 
+                    obscureText
+                        ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
                     color: const Color(0xFF8B2323),
                   ),

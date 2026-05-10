@@ -29,6 +29,8 @@ class AuthController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
+
+        return;
       }
 
       Get.snackbar(

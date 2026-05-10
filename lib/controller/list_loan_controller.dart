@@ -1,13 +1,20 @@
-import 'package:admin_dashboard/models/list_loan_model.dart';
+import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
+import 'package:admin_dashboard/services/loan_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListLoanController extends GetxController {
+  final LoanService service = LoanService();
+
   /// ACTIVE FILTER
   RxString selectedFilter = "All".obs;
 
   /// DATA
-  RxList<ListLoanModel> loans = <ListLoanModel>[].obs;
+  RxList<LoanData> loans = <LoanData>[].obs;
+
+  /// LOADING
+  RxBool isLoading = false.obs;
 
   /// FILTER
   final List<String> filters = [
@@ -22,7 +29,7 @@ class ListLoanController extends GetxController {
   void onInit() {
     super.onInit();
 
-    getLoans();
+    fetchLoans();
   }
 
   /// CHANGE FILTER
@@ -30,8 +37,43 @@ class ListLoanController extends GetxController {
     selectedFilter.value = value;
   }
 
+  /// FETCH API
+  void fetchLoans() async {
+    try {
+      isLoading.value = true;
+
+      final result = await service.getLoans();
+
+      loans.assignAll(result);
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   /// FILTER RESULT
-  List<ListLoanModel> get filteredLoans {
+  List<LoanData> get filteredLoans {
     if (selectedFilter.value == "All") {
       return loans;
     }
@@ -39,42 +81,5 @@ class ListLoanController extends GetxController {
     return loans.where((item) {
       return item.status.toLowerCase() == selectedFilter.value.toLowerCase();
     }).toList();
-  }
-
-  /// DUMMY DATA
-  void getLoans() {
-    loans.assignAll([
-      ListLoanModel(
-        code: "#PJ-5002",
-        name: "Motor Supra X500",
-        returnDate: "10 Mar 2025",
-        status: "Pending",
-        image: "",
-      ),
-
-      ListLoanModel(
-        code: "#PJ-5001",
-        name: "Proyektor Epson EB-X400",
-        returnDate: "25 Feb 2025",
-        status: "Dikembalikan",
-        image: "",
-      ),
-
-      ListLoanModel(
-        code: "#PJ-5003",
-        name: "Karpet Musholla",
-        returnDate: "5 Mar 2025",
-        status: "Dipinjam",
-        image: "",
-      ),
-
-      ListLoanModel(
-        code: "#PJ-5004",
-        name: "AC Portable 2 PK",
-        returnDate: "1 Mar 2025",
-        status: "Terlambat",
-        image: "",
-      ),
-    ]);
   }
 }

@@ -15,8 +15,6 @@ class InventarisPage extends StatelessWidget {
 
   final controller = Get.find<InventarisController>();
 
-  final List<String> categories = ["All", "Elektronik", "Fotografi", "Mesin"];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +39,12 @@ class InventarisPage extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: ReusableButton(text: "Kelola Lokasi", onTap: () {
-                      Get.toNamed(AppRoutes.location);
-                    }),
+                    child: ReusableButton(
+                      text: "Kelola Lokasi",
+                      onTap: () {
+                        Get.toNamed(AppRoutes.location);
+                      },
+                    ),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
@@ -67,16 +68,17 @@ class InventarisPage extends StatelessWidget {
               height: 52,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
+                itemCount: controller.categories.length,
                 itemBuilder: (context, index) {
                   return Obx(
                     () => InventarisChip(
-                      title: categories[index],
+                      title: controller.categories[index],
                       isSelected:
                           controller.selectedCategory.value ==
-                          categories[index],
+                          controller.categories[index],
                       onTap: () {
-                        controller.selectedCategory.value = categories[index];
+                        controller.selectedCategory.value =
+                            controller.categories[index];
                       },
                     ),
                   );
@@ -113,8 +115,8 @@ class InventarisPage extends StatelessWidget {
       floatingActionButton: CustomFAB(
         onPressed: () {
           Get.toNamed(AppRoutes.addInventory);
-        }, 
-        icon: Icons.add
+        },
+        icon: Icons.add,
       ),
     );
   }

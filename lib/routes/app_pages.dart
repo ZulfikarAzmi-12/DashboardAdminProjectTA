@@ -11,6 +11,7 @@ import 'package:admin_dashboard/binding/navbar_binding.dart';
 import 'package:admin_dashboard/binding/notification_binding.dart';
 import 'package:admin_dashboard/binding/profile_binding.dart';
 import 'package:admin_dashboard/binding/report_binding.dart';
+import 'package:admin_dashboard/binding/splash_binding.dart';
 import 'package:admin_dashboard/pages/add_inventory_page.dart';
 import 'package:admin_dashboard/pages/add_user_page.dart';
 import 'package:admin_dashboard/pages/category_page.dart';
@@ -33,89 +34,87 @@ import 'app_routes.dart';
 class AppPages {
   static final pages = [
     // Tambahkan baris ini agar route '/login' dikenali
+    GetPage(name: AppRoutes.login, page: () => LoginPage()),
     GetPage(
-      name: AppRoutes.login,
-      page: () => LoginPage(),
+      name: AppRoutes.splash,
+      page: () => SplashPage(),
+      binding: SplashBinding(),
     ),
     GetPage(
-    name: AppRoutes.splash,
-    page: () => SplashPage(),
+      name: AppRoutes.main,
+      page: () => MainPage(),
+      bindings: [
+        NavbarBinding(),
+        HomeBinding(),
+        InventarisBinding(),
+        ReportBinding(),
+        ProfileBinding(),
+      ],
     ),
     GetPage(
-    name: AppRoutes.main,
-    page: () => MainPage(),
-    bindings: [
-      NavbarBinding(),
-      HomeBinding(),
-      InventarisBinding(),
-      ReportBinding()
-    ]
+      name: AppRoutes.home,
+      page: () => HomePage(),
+      binding: HomeBinding(),
     ),
     GetPage(
-    name: AppRoutes.home,
-    page: () => HomePage(),
-    binding: HomeBinding()
+      name: AppRoutes.inventaris,
+      page: () => InventarisPage(),
+      binding: InventarisBinding(),
     ),
     GetPage(
-    name: AppRoutes.inventaris,
-    page: () => InventarisPage(),
-    binding: InventarisBinding()
+      name: AppRoutes.laporan,
+      page: () => ReportPage(),
+      binding: ReportBinding(),
     ),
     GetPage(
-    name: AppRoutes.laporan,
-    page: () => ReportPage(),
-    binding: ReportBinding()  
+      name: AppRoutes.profile,
+      page: () => ProfilePage(),
+      binding: ProfileBinding(),
     ),
     GetPage(
-    name: AppRoutes.profile,
-    page: () => ProfilePage(),
-    binding: ProfileBinding()
+      name: AppRoutes.changePassword,
+      page: () => ChangePasswordPage(),
+      binding: ChangepasswordBinding(),
     ),
     GetPage(
-    name: AppRoutes.changePassword,
-    page: () => ChangePasswordPage(),
-    binding: ChangepasswordBinding()
+      name: AppRoutes.manageUser,
+      page: () => ManageuserPage(),
+      binding: ManageuserBinding(),
     ),
     GetPage(
-    name: AppRoutes.manageUser,
-    page: () => ManageuserPage(),
-    binding: ManageuserBinding()
+      name: AppRoutes.addUser,
+      page: () => AddUserPage(),
+      binding: ManageuserBinding(),
     ),
     GetPage(
-    name: AppRoutes.addUser,
-    page: () => AddUserPage(),
-    binding: ManageuserBinding()
+      name: AppRoutes.addInventory,
+      page: () => AddInventoryPage(),
+      binding: AddInventoryBinding(),
     ),
     GetPage(
-    name: AppRoutes.addInventory,
-    page: () => AddInventoryPage(),
-    binding: AddInventoryBinding()
+      name: AppRoutes.notification,
+      page: () => NotificationPage(),
+      binding: NotificationBinding(),
     ),
     GetPage(
-    name: AppRoutes.notification,
-    page: () => NotificationPage(),
-    binding: NotificationBinding()
+      name: AppRoutes.location,
+      page: () => LocationPage(),
+      binding: LocationBinding(),
     ),
     GetPage(
-    name: AppRoutes.location,
-    page: () => LocationPage(),
-    binding: LocationBinding()
+      name: AppRoutes.category,
+      page: () => CategoryPage(),
+      binding: CategoryBinding(),
     ),
     GetPage(
-    name: AppRoutes.category,
-    page: () => CategoryPage(),
-    binding: CategoryBinding()
+      name: AppRoutes.loan,
+      page: () => LoanFormPage(),
+      binding: LoanBinding(),
     ),
     GetPage(
-    name: AppRoutes.loan,
-    page: () => LoanFormPage(),
-    binding: LoanBinding()
+      name: AppRoutes.listLoan,
+      page: () => ListLoanPage(),
+      binding: ListLoanBinding(),
     ),
-    GetPage(
-    name: AppRoutes.listLoan,
-    page: () => ListLoanPage(),
-    binding: ListLoanBinding()
-    ),
-    
   ];
 }
