@@ -1,18 +1,17 @@
 class CategoryModel {
-  final int id;
-  final String name;
+  final String id;
+  final String categoryName;
 
-  CategoryModel({
-    required this.id,
-    required this.name,
-  });
+  CategoryModel({required this.id, required this.categoryName});
 
-  factory CategoryModel.fromJson(
-    Map<String, dynamic> json,
-  ) {
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['id'],
-      name: json['name'],
+      id: json['id'] ?? '',
+      categoryName: json['categoryName'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"id": id, "categoryName": categoryName};
   }
 }

@@ -1,20 +1,19 @@
+import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/location_model.dart';
 import 'package:admin_dashboard/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 class LocationController extends GetxController {
+  final LocationService service = LocationService();
 
-  final LocationService _service =
-      LocationService();
+  final locationTextController = TextEditingController();
 
-  final locationTextController =
-      TextEditingController();
+  var locationList = <LocationModel>[].obs;
 
-  final locationList =
-      <LocationModel>[].obs;
+  var isLoading = false.obs;
+  var isError = false.obs;
+  var errorMessage = ''.obs;
 
   @override
   void onInit() {
@@ -23,19 +22,161 @@ class LocationController extends GetxController {
   }
 
   Future<void> getLocations() async {
+    isLoading.value = true;
+    isError.value = false;
 
-    final data =
-        await _service.getLocations();
+    try {
+      final result = await service.getLocations();
 
-    locationList.value = data;
+      locationList.value = result;
+    } on AppError catch (e) {
+      isError.value = true;
+
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      errorMessage.value = message;
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isError.value = true;
+
+      errorMessage.value = "Terjadi kesalahan";
+
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    isLoading.value = false;
   }
 
   void toggleLocationStatus(int index) {
+    final item = locationList[index];
 
-    locationList[index].isActive =
-        !locationList[index].isActive;
+    locationList[index] = LocationModel(
+      id: item.id,
+      locationName: item.locationName,
+      isActive: !item.isActive,
+    );
+  }
 
-    locationList.refresh();
+  Future<void> createLocation() async {
+    try {
+      final locationName = locationTextController.text.trim();
+
+      if (locationName.isEmpty) {
+        Get.snackbar(
+          "Error",
+          "Nama lokasi wajib diisi",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+
+        return;
+      }
+
+      final result = await service.createLocation(locationName);
+
+      locationList.insert(0, result);
+
+      locationTextController.clear();
+
+      Get.snackbar(
+        "Success",
+        "Berhasil menambahkan lokasi",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  Future<void> updateLocation({
+    required String locationId,
+    String? locationName,
+    bool? isActive,
+  }) async {
+    try {
+      final result = await service.updateLocation(
+        locationId: locationId,
+        locationName: locationName,
+        isActive: isActive,
+      );
+
+      final index = locationList.indexWhere((e) => e.id == locationId);
+
+      if (index != -1) {
+        locationList[index] = result;
+        locationList.refresh();
+      }
+
+      Get.snackbar(
+        "Success",
+        "Berhasil update lokasi",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   @override

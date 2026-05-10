@@ -1,20 +1,19 @@
-import 'package:admin_dashboard/models/category_model.dart';
+import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/models/inventaris_model.dart';
 import 'package:admin_dashboard/services/category_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class CategoryController extends GetxController {
+  final CategoryService service = CategoryService();
 
-class CategoryController
-    extends GetxController {
+  final categoryTextController = TextEditingController();
 
-  final CategoryService _service =
-      CategoryService();
+  var categoryList = <CategoryModel>[].obs;
 
-  final categoryTextController =
-      TextEditingController();
-
-  final categoryList =
-      <CategoryModel>[].obs;
+  var isLoading = false.obs;
+  var isError = false.obs;
+  var errorMessage = ''.obs;
 
   @override
   void onInit() {
@@ -23,11 +22,160 @@ class CategoryController
   }
 
   Future<void> getCategories() async {
+    isLoading.value = true;
+    isError.value = false;
 
-    final data =
-        await _service.getCategories();
+    try {
+      final result = await service.getCategorys();
 
-    categoryList.value = data;
+      categoryList.value = result;
+    } on AppError catch (e) {
+      isError.value = true;
+
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      errorMessage.value = message;
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      isError.value = true;
+      errorMessage.value = "Terjadi kesalahan";
+
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    isLoading.value = false;
+  }
+
+  Future<void> createCategory() async {
+    try {
+      final categoryName = categoryTextController.text.trim();
+
+      if (categoryName.isEmpty) {
+        Get.snackbar(
+          "Error",
+          "Nama category wajib diisi",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+
+        return;
+      }
+
+      final result = await service.createCategory(categoryName);
+
+      categoryList.insert(0, result);
+
+      categoryTextController.clear();
+
+      Get.snackbar(
+        "Success",
+        "Berhasil menambahkan category",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  Future<void> updateCategory({
+    required String categoryId,
+    required String categoryName,
+  }) async {
+    try {
+      if (categoryName.trim().isEmpty) {
+        Get.snackbar(
+          "Error",
+          "Nama category wajib diisi",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+
+        return;
+      }
+
+      final result = await service.updateCategory(
+        categoryId: categoryId,
+        categoryName: categoryName,
+      );
+
+      final index = categoryList.indexWhere((e) => e.id == categoryId);
+
+      if (index != -1) {
+        categoryList[index] = result;
+        categoryList.refresh();
+      }
+
+      Get.snackbar(
+        "Success",
+        "Berhasil update category",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on AppError catch (e) {
+      String message = e.message;
+
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"];
+      }
+
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   @override

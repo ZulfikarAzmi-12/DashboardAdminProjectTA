@@ -42,7 +42,12 @@ class CategoryPage extends StatelessWidget {
             ),
 
             /// BUTTON
-            BigButton(title: "Tambah", onTap: () {}),
+            BigButton(
+              title: "Tambah",
+              onTap: () {
+                controller.createCategory();
+              },
+            ),
 
             const SizedBox(height: 24),
 
@@ -56,14 +61,26 @@ class CategoryPage extends StatelessWidget {
                     final item = controller.categoryList[index];
 
                     return SlideCard(
-                      title: item.name,
+                      title: item.categoryName,
 
                       actions: [
                         /// EDIT BUTTON
                         SlideActionButton(
                           backgroundColor: const Color(0xffF97316),
 
-                          onTap: () {},
+                          onTap: () {
+                            showEditCategoryDialog(
+                              context: context,
+                              initialValue: item.categoryName,
+
+                              onSave: (value) {
+                                controller.updateCategory(
+                                  categoryId: item.id,
+                                  categoryName: value,
+                                );
+                              },
+                            );
+                          },
 
                           child: const Icon(
                             Icons.edit_outlined,
@@ -81,6 +98,66 @@ class CategoryPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void showEditCategoryDialog({
+    required BuildContext context,
+    required String initialValue,
+    required Function(String value) onSave,
+  }) {
+    final TextEditingController controller = TextEditingController(
+      text: initialValue,
+    );
+
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+
+        title: const Text(
+          "Edit Category",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+
+        content: TextField(
+          controller: controller,
+
+          decoration: InputDecoration(
+            hintText: "Nama category",
+
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+        ),
+
+        actions: [
+          /// CANCEL
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+
+            child: const Text("Batal"),
+          ),
+
+          /// SAVE
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff2563EB),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+
+            onPressed: () {
+              onSave(controller.text);
+
+              Get.back();
+            },
+
+            child: const Text("Simpan", style: TextStyle(color: Colors.white)),
+          ),
+        ],
       ),
     );
   }
