@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/inventaris_model.dart';
-import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:admin_dashboard/services/inventaris_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -104,6 +103,8 @@ class AddInventoryController extends GetxController {
         image: selectedImage.value!,
       );
 
+      Get.back();
+
       Get.snackbar(
         "Success",
         "Berhasil menambahkan inventory",
@@ -121,8 +122,6 @@ class AddInventoryController extends GetxController {
       selectedLocation.value = '';
 
       selectedImage.value = null;
-
-      Get.offAllNamed(AppRoutes.inventaris);
     } on AppError catch (e) {
       String message = e.message;
 

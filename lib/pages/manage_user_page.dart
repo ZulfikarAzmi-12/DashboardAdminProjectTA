@@ -4,6 +4,7 @@ import 'package:admin_dashboard/components/card/user_card.dart';
 import 'package:admin_dashboard/controller/manageuser_controller.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import '../constants/app_color.dart';
 
@@ -42,7 +43,53 @@ class ManageuserPage extends StatelessWidget {
                 itemCount: controller.users.length,
                 itemBuilder: (context, index) {
                   final user = controller.users[index];
-                  return UserCard(user: user);
+
+                  return Slidable(
+                    key: ValueKey(user.id),
+
+                    /// ================= ACTION =================
+                    endActionPane: ActionPane(
+                      motion: const DrawerMotion(),
+                      children: [
+                        /// DELETE
+                        SlidableAction(
+                          onPressed: (context) {
+                            Get.dialog(
+                              AlertDialog(
+                                title: const Text("Hapus User"),
+                                content: const Text(
+                                  "Yakin ingin menghapus user ini?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Get.back(),
+                                    child: const Text("Batal"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      controller.deleteUser(user.id);
+                                      Get.back();
+                                    },
+                                    child: const Text(
+                                      "Hapus",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          backgroundColor: const Color(0xffEF4444),
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete_outline,
+                          label: 'Delete',
+                        ),
+                      ],
+                    ),
+
+                    /// ================= CARD =================
+                    child: UserCard(user: user),
+                  );
                 },
               );
             }),

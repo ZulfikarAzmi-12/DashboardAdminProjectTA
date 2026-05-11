@@ -10,26 +10,19 @@ import 'package:get/get.dart';
 class ReportPage extends StatelessWidget {
   ReportPage({super.key});
 
-  final controller = Get.find<ReportController>();
+  final ReportController controller = Get.find<ReportController>();
 
-  final List<String> filters = [
-    "All",
-    "Pending",
-    "Diproses",
-    "Selesai",
-  ];
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
-        title: "Inventaris",  
+        title: "Inventaris",
         actions: [
           IconButton(
             icon: Icon(Icons.notifications_none, color: AppColor.primary),
             onPressed: () {
-                Get.toNamed(AppRoutes.notification);
+              Get.toNamed(AppRoutes.notification);
             },
           ),
         ],
@@ -38,36 +31,38 @@ class ReportPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ================= TITLE ============ =====
+            // ================= TITLE =================
             const Padding(
               padding: EdgeInsets.only(left: 16, top: 16, bottom: 12),
               child: Text(
                 "Laporan Kerusakan",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
 
-            // ================= FILTER CHIP =================
+            // ================= FILTER =================
             SizedBox(
-              height: 56, // ✅ FIX: sebelumnya 40 (terlalu kecil)
+              height: 56,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 physics: const BouncingScrollPhysics(),
-                itemCount: filters.length,
+                itemCount: controller.filters.length,
                 itemBuilder: (context, index) {
-                  return Obx(() => InventarisChip(
-                        title: filters[index],
-                        isSelected:
-                            controller.selectedFilter.value == filters[index],
+                  final filter = controller.filters[index];
+
+                  return Obx(() {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: InventarisChip(
+                        title: filter,
+                        isSelected: controller.selectedFilter.value == filter,
                         onTap: () {
-                          controller.applyFilter(filters[index]);
+                          controller.applyFilter(filter);
                         },
-                      ));
+                      ),
+                    );
+                  });
                 },
               ),
             ),
@@ -78,15 +73,11 @@ class ReportPage extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (controller.filteredReports.isEmpty) {
-                  return const Center(
-                    child: Text("Data tidak ditemukan"),
-                  );
+                  return const Center(child: Text("Data tidak ditemukan"));
                 }
 
                 return ListView.builder(
@@ -94,7 +85,11 @@ class ReportPage extends StatelessWidget {
                   itemCount: controller.filteredReports.length,
                   itemBuilder: (context, index) {
                     final item = controller.filteredReports[index];
-                    return ReportCard(data: item);
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: ReportCard(data: item),
+                    );
                   },
                 );
               }),

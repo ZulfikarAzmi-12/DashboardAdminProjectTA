@@ -3,17 +3,17 @@ import 'package:admin_dashboard/models/report_model.dart';
 import 'package:flutter/material.dart';
 
 class ReportCard extends StatelessWidget {
-  final ReportModel data;
+  final DamageReportModel data;
 
   const ReportCard({super.key, required this.data});
 
   Color getStatusColor() {
     switch (data.status) {
-      case "Pending":
+      case "pending":
         return AppColor.pending;
-      case "Diproses":
+      case "diproses":
         return AppColor.dipinjam;
-      case "Selesai":
+      case "selesai":
         return AppColor.gray;
       default:
         return AppColor.blue;
@@ -62,15 +62,21 @@ class ReportCard extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(bottom: 4),
             child: Text(
-              data.title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16,),
+              data.unit.itemName,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
 
           // CODE
           Container(
             margin: const EdgeInsets.only(bottom: 8),
-            child: Text(data.code, style: TextStyle(fontWeight: FontWeight.bold,color:  AppColor.primary)),
+            child: Text(
+              data.unit.itemUnitCode,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColor.primary,
+              ),
+            ),
           ),
 
           const Divider(),
@@ -80,12 +86,15 @@ class ReportCard extends StatelessWidget {
             margin: const EdgeInsets.only(top: 8, bottom: 4),
             child: const Text(
               "Aduan :",
-              style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.primary),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: AppColor.primary,
+              ),
             ),
           ),
 
           // CONTENT
-          Text(data.complaint),
+          Text(data.title),
         ],
       ),
     );

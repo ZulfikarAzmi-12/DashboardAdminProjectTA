@@ -2,9 +2,8 @@ import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/user_model.dart';
 import 'package:flutter/material.dart';
 
-
 class UserCard extends StatelessWidget {
-  final UserModel user;
+  final AccountModel user;
 
   const UserCard({super.key, required this.user});
 
@@ -21,7 +20,7 @@ class UserCard extends StatelessWidget {
             blurRadius: 6,
             color: Colors.black.withOpacity(0.1),
             offset: const Offset(0, 3),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -32,7 +31,7 @@ class UserCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                user.name,
+                user.username,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -51,12 +50,9 @@ class UserCard extends StatelessWidget {
                 ),
                 child: Text(
                   user.role,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
-              )
+              ),
             ],
           ),
 

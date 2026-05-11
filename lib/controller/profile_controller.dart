@@ -1,7 +1,7 @@
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/user_model.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
-import 'package:admin_dashboard/services/profile_service.dart';
+import 'package:admin_dashboard/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,9 +13,9 @@ class ProfileController extends GetxController {
     fetchProfile();
   }
 
-  final ProfileService service = ProfileService();
+  final AccountService service = AccountService();
 
-  Rxn<ProfileModel> profile = Rxn<ProfileModel>();
+  Rxn<AccountModel> profile = Rxn<AccountModel>();
 
   void fetchProfile() async {
     try {

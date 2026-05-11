@@ -95,7 +95,9 @@ class HomePage extends StatelessWidget {
                           child: HomeButton(
                             text: "Tambah Barang",
                             icon: Icons.add,
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.addInventory);
+                            },
                           ),
                         ),
                         Expanded(
@@ -104,7 +106,9 @@ class HomePage extends StatelessWidget {
                             child: HomeButton(
                               text: "Kelola User",
                               icon: Icons.person,
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.manageUser);
+                              },
                             ),
                           ),
                         ),
