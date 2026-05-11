@@ -12,16 +12,17 @@ class ChangePasswordTextField extends StatelessWidget {
     required this.hintText,
     this.isPassword = false,
     this.controller,
-    this.margin
+    this.margin,
   });
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
       child: TextField(
         obscureText: isPassword,
         style: const TextStyle(fontSize: 14),
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(fontSize: 14),

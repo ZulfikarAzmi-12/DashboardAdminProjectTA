@@ -49,4 +49,48 @@ class AuthService {
       );
     }
   }
+
+  Future<void> changePassword({
+    required String passwordLama,
+    required String passwordBaru,
+  }) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("accessToken");
+
+      final response = await http.post(
+        Uri.parse("$baseURL/reset"),
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({
+          "passwordLama": passwordLama,
+          "passwordBaru": passwordBaru,
+        }),
+      );
+
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && json['status'] == 'success') {
+        return;
+      }
+
+      throw AppError(
+        status: json['status'] ?? 'error',
+        statusCode: response.statusCode,
+        message: json['message'] ?? 'Gagal mengganti password',
+      );
+    } catch (e) {
+      if (e is AppError) rethrow;
+
+      throw AppError(
+        status: 'error',
+        statusCode: 500,
+        message: 'Terjadi kesalahan',
+        error: e,
+      );
+    }
+  }
 }
