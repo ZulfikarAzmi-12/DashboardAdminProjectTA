@@ -1,5 +1,5 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
-import 'package:admin_dashboard/components/button/login_button.dart';
+import 'package:admin_dashboard/components/button/long_button.dart';
 import 'package:admin_dashboard/components/textfield/cp_textfield.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/changepassword_controller.dart';
@@ -46,7 +46,8 @@ class ChangePasswordPage extends StatelessWidget {
 
               /// BUTTON
               Obx(() {
-                return DefaultButton(
+                return LongButton(
+                  backgroundColor: AppColor.primary,
                   text: controller.isLoading.value
                       ? "Loading..."
                       : "Ganti Password",

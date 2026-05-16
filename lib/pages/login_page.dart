@@ -1,4 +1,4 @@
-import 'package:admin_dashboard/components/button/login_button.dart';
+import 'package:admin_dashboard/components/button/long_button.dart';
 import 'package:admin_dashboard/components/textfield/login_textfield.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/auth_controller.dart';
@@ -52,7 +52,8 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 40),
 
               // Tombol Login
-              DefaultButton(
+              LongButton(
+                backgroundColor: AppColor.primary,
                 text: 'Login',
                 onPressed: () {
                   authController.login();

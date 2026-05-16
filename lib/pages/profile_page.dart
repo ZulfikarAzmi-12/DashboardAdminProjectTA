@@ -1,5 +1,5 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
-import 'package:admin_dashboard/components/button/login_button.dart';
+import 'package:admin_dashboard/components/button/long_button.dart';
 import 'package:admin_dashboard/components/button/profile_menu.dart';
 import 'package:admin_dashboard/components/card/profile-card.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
@@ -61,7 +61,8 @@ class ProfilePage extends StatelessWidget {
 
                 const Spacer(),
 
-                DefaultButton(
+                LongButton(
+                  backgroundColor: AppColor.primary,
                   text: "Logout",
                   onPressed: () {
                     controller.logout();

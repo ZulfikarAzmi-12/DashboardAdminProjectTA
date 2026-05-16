@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      initialRoute: AppRoutes.detailLoan,
+      initialRoute: AppRoutes.detailInventory,
       getPages: AppPages.pages,
     );
   }
