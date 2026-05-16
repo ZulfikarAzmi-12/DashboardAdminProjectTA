@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/binding/add_inventory_binding.dart';
 import 'package:admin_dashboard/binding/category_binding.dart';
 import 'package:admin_dashboard/binding/changepassword_binding.dart';
+import 'package:admin_dashboard/binding/detail_loan_binding.dart';
 import 'package:admin_dashboard/binding/home_binding.dart';
 import 'package:admin_dashboard/binding/inventaris_binding.dart';
 import 'package:admin_dashboard/binding/list_loan_binding.dart';
@@ -20,6 +21,7 @@ import 'package:admin_dashboard/pages/home_page.dart';
 import 'package:admin_dashboard/pages/inventaris_page.dart';
 import 'package:admin_dashboard/pages/laporan_page.dart';
 import 'package:admin_dashboard/pages/list_loan_page.dart';
+import 'package:admin_dashboard/pages/loan_detail_page.dart';
 import 'package:admin_dashboard/pages/loan_form_page.dart';
 import 'package:admin_dashboard/pages/location_page.dart';
 import 'package:admin_dashboard/pages/login_page.dart';
@@ -115,6 +117,11 @@ class AppPages {
       name: AppRoutes.listLoan,
       page: () => ListLoanPage(),
       binding: ListLoanBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.detailLoan,
+      page: () => LoanDetailPage(),
+      binding: DetailLoanBinding(),
     ),
   ];
 }
