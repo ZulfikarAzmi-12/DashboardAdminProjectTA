@@ -162,15 +162,25 @@ class HomePage extends StatelessWidget {
                       child: Text("Belum ada data"),
                     )
                   else
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.loans.length,
-                      itemBuilder: (context, index) {
-                        final loan = controller.loans[index];
+                    RefreshIndicator(
+                      color: AppColor.primary,
+                      onRefresh: () async => controller.fetchLoans(),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: controller.loans.length,
+                        itemBuilder: (context, index) {
+                          final loan = controller.loans[index];
 
-                        return LoanCard(data: loan);
-                      },
+                          return LoanCard(
+                            data: loan,
+                            onPresed: () => Get.toNamed(
+                              AppRoutes.detailLoan,
+                              arguments: loan.id,
+                            ),
+                          );
+                        },
+                      ),
                     ),
 
                   SizedBox(height: 20),

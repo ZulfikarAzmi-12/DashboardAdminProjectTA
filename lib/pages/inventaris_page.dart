@@ -31,7 +31,7 @@ class InventarisPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: ListView(
+        child: Column(
           children: [
             // ================= TOP BUTTON =================
             Container(
@@ -65,52 +65,75 @@ class InventarisPage extends StatelessWidget {
                 controller.updateSearch(value);
               },
             ),
-            // ================= CATEGORY CHIP =================
-            Container(
-              margin: const EdgeInsets.only(top: 12, left: 16),
-              height: 52,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.categories.length,
-                itemBuilder: (context, index) {
-                  return Obx(
-                    () => InventarisChip(
-                      title: controller.categories[index],
-                      isSelected:
-                          controller.selectedCategory.value ==
-                          controller.categories[index],
-                      onTap: () {
-                        controller.selectedCategory.value =
-                            controller.categories[index];
-                      },
-                    ),
-                  );
+
+            // ================= CHIP + LIST (dibungkus RefreshIndicator) =================
+            Expanded(
+              child: RefreshIndicator(
+                color: AppColor.primary,
+                onRefresh: () async {
+                  controller.fetchCategories();
+                  controller.fetchInventories();
                 },
+                child: ListView(
+                  children: [
+                    // ================= CATEGORY CHIP =================
+                    Container(
+                      margin: const EdgeInsets.only(top: 12, left: 16),
+                      height: 52,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.categories.length,
+                        itemBuilder: (context, index) {
+                          return Obx(
+                            () => InventarisChip(
+                              title: controller.categories[index],
+                              isSelected:
+                                  controller.selectedCategory.value ==
+                                  controller.categories[index],
+                              onTap: () {
+                                controller.selectedCategory.value =
+                                    controller.categories[index];
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    // ================= LIST =================
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      if (controller.filteredItems.isEmpty) {
+                        return const Center(
+                          child: Text("Data tidak ditemukan"),
+                        );
+                      }
+
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.filteredItems.length,
+                        itemBuilder: (context, index) {
+                          final item = controller.filteredItems[index];
+                          return GestureDetector(
+                            onTap: () => Get.toNamed(
+                              AppRoutes.detailInventory,
+                              arguments: item.id,
+                            ),
+                            child: InventarisCard(item: item),
+                          );
+                        },
+                      );
+                    }),
+                  ],
+                ),
               ),
             ),
-
-            const SizedBox(height: 12),
-
-            // ================= LIST =================
-            Obx(() {
-              if (controller.isLoading.value) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (controller.filteredItems.isEmpty) {
-                return const Center(child: Text("Data tidak ditemukan"));
-              }
-
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.filteredItems.length,
-                itemBuilder: (context, index) {
-                  final item = controller.filteredItems[index];
-                  return InventarisCard(item: item);
-                },
-              );
-            }),
           ],
         ),
       ),

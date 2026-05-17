@@ -26,8 +26,18 @@ class LoanDetailPage extends StatelessWidget {
         ),
       ),
 
-      body: Obx(
-        () => Padding(
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.loanData.value == null) {
+          return const Center(child: Text("Data tidak ditemukan"));
+        }
+
+        final loan = controller.loanData.value!;
+
+        return Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -40,14 +50,11 @@ class LoanDetailPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          DetailLoanStatus(
-                            status: controller.loanData.value.status,
-                          ),
-
+                          DetailLoanStatus(status: loan.status),
                           Text(
-                            controller.loanData.value.loanCode,
+                            loan.loanCode,
                             style: const TextStyle(
-                              fontSize: 26,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF8B2E28),
                             ),
@@ -63,17 +70,15 @@ class LoanDetailPage extends StatelessWidget {
                           Expanded(
                             child: DetailLoanInfo(
                               title: 'Tgl Pinjam',
-                              value: controller.loanData.value.borrowDate,
+                              value: loan.borrowDate,
                               icon: Icons.calendar_today,
                             ),
                           ),
-
                           const SizedBox(width: 20),
-
                           Expanded(
                             child: DetailLoanInfo(
                               title: 'Tgl Kembali',
-                              value: controller.loanData.value.returnDate,
+                              value: loan.returnDate,
                               icon: Icons.calendar_today,
                             ),
                           ),
@@ -84,9 +89,9 @@ class LoanDetailPage extends StatelessWidget {
 
                       /// ITEM CARD
                       LoanDetailCard(
-                        itemName: controller.loanData.value.itemName,
-                        itemCode: controller.loanData.value.itemCode,
-                        imageUrl: controller.loanData.value.imageUrl,
+                        itemName: loan.itemName,
+                        itemCode: loan.itemCode,
+                        imageUrl: loan.imageUrl,
                       ),
 
                       const SizedBox(height: 28),
@@ -94,9 +99,7 @@ class LoanDetailPage extends StatelessWidget {
                       /// BORROWER
                       DetailLoanInfo(
                         title: 'Peminjam :',
-                        value:
-                            '${controller.loanData.value.borrowerName}\n'
-                            '${controller.loanData.value.borrowerPhone}',
+                        value: '${loan.borrowerName}\n${loan.borrowerPhone}',
                         isColumn: true,
                       ),
 
@@ -105,7 +108,7 @@ class LoanDetailPage extends StatelessWidget {
                       /// PURPOSE
                       DetailLoanInfo(
                         title: 'Dipinjam Untuk :',
-                        value: controller.loanData.value.loanPurpose,
+                        value: loan.loanPurpose,
                         isColumn: true,
                       ),
                     ],
@@ -115,32 +118,70 @@ class LoanDetailPage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// BUTTON SECTION
-              Row(
-                children: [
-                  Expanded(
-                    child: DetailLoanButton(
-                      title: 'Tolak',
-                      backgroundColor: AppColor.primary,
-                      onTap: controller.rejectLoan,
-                    ),
-                  ),
-
-                  const SizedBox(width: 16),
-
-                  Expanded(
-                    child: DetailLoanButton(
-                      title: 'Setujui',
-                      backgroundColor: AppColor.dipinjam,
-                      onTap: controller.approveLoan,
-                    ),
-                  ),
-                ],
-              ),
+              _buildActionButtons(loan.status),
             ],
           ),
-        ),
-      ),
+        );
+      }),
     );
+  }
+
+  Widget _buildActionButtons(String status) {
+    if (controller.isActionLoading.value) {
+      return const SizedBox(
+        height: 52,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    switch (status.toLowerCase()) {
+      // ── Pending → Tolak + Setujui ─────────────────────────────────────
+      case "pending":
+        return Row(
+          children: [
+            Expanded(
+              child: DetailLoanButton(
+                title: 'Tolak',
+                backgroundColor: AppColor.primary,
+                onTap: () {
+                  controller.rejectLoan();
+                },
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: DetailLoanButton(
+                title: 'Setujui',
+                backgroundColor: AppColor.dipinjam,
+                onTap: () {
+                  controller.approveLoan();
+                },
+              ),
+            ),
+          ],
+        );
+
+      // ── Dipinjam / Terlambat → Pengembalian ──────────────────────────
+      case "dipinjam":
+      case "terlambat":
+        return SizedBox(
+          width: double.infinity,
+          child: DetailLoanButton(
+            title: 'Pengembalian',
+            backgroundColor: AppColor.dipinjam,
+            onTap: () {
+              controller.returnLoan();
+            },
+          ),
+        );
+
+      // ── Dikembalikan / Ditolak → tidak ada button ─────────────────────
+      case "dikembalikan":
+      case "ditolak":
+        return const SizedBox.shrink();
+
+      default:
+        return const SizedBox.shrink();
+    }
   }
 }

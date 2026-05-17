@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 class DetailLoanBinding extends Bindings{
   @override
   void dependencies() {
-    // TODO: implement dependencies
-    Get.lazyPut<LoanDetailController>(() => LoanDetailController(),);
+   Get.lazyPut<LoanDetailController>(() => LoanDetailController(),);
   }
 
 }

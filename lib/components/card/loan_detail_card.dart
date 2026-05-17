@@ -13,6 +13,10 @@ class LoanDetailCard extends StatelessWidget {
     required this.imageUrl,
   });
 
+  // Reusable icon placeholder
+  Widget get _placeholder =>
+      const Icon(Icons.image_outlined, color: AppColor.lightgray, size: 34);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,16 +42,17 @@ class LoanDetailCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: imageUrl.isEmpty
-                ? const Icon(
-                    Icons.image_outlined,
-                    color: AppColor.lightgray,
-                    size: 34,
-                  )
+                // ── 1. URL kosong → langsung icon ─────────────────────
+                ? _placeholder
+                // ── 2. URL ada → coba load, siapkan fallback ──────────
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       imageUrl,
                       fit: BoxFit.cover,
+                      // Gagal load (404, timeout, dll) → icon
+                      errorBuilder: (context, error, stackTrace) =>
+                          _placeholder,
                     ),
                   ),
           ),

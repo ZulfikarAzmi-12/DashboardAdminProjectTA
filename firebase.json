@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"ta-inventory","appId":"1:664812164727:android:9c39e9b69a8952c92ad872","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"ta-inventory","configurations":{"android":"1:664812164727:android:9c39e9b69a8952c92ad872","ios":"1:664812164727:ios:d2e2a341908d7ce02ad872"}}}}}}

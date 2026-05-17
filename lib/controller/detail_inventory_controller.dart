@@ -1,54 +1,56 @@
 import 'package:admin_dashboard/models/detail_inventory_model.dart';
+import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/services/detail_inventory_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class DetailInventoryController extends GetxController {
+  final DetailInventoryService _inventoryService = DetailInventoryService();
 
-  late DetailInventoryModel inventory;
+  // ── Observable state ──────────────────────────────────────────────────────
+  final isLoading = false.obs;
+  final Rx<ItemDetailModel?> itemDetail = Rx<ItemDetailModel?>(null);
 
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
   @override
   void onInit() {
     super.onInit();
-
-    loadDummyData();
+    final String itemId = Get.arguments as String;
+    fetchItemDetail(itemId);
   }
 
-  void loadDummyData() {
-
-    inventory = DetailInventoryModel(
-      image:
-          'https://images.unsplash.com/photo-1523381210434-271e8be1f52b',
-      title: 'Camera canon g7x m5',
-      inventoryId: 'SCH-ELC-001',
-      totalUnit: 2,
-      location: 'Gudang A',
-      category: 'Fotografi',
-      description:
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      units: [
-        {
-          'id': 'SCH-ELC-001-1',
-          'status': 'Tersedia',
-        },
-        {
-          'id': 'SCH-ELC-001-2',
-          'status': 'Dipinjam',
-        },
-        {
-          'id': 'SCH-ELC-001-3',
-          'status': 'Perbaikan',
-        },
-      ],
-    );
-  }
-
-  void onDeactivate() {
-
-    // action deactivate
-  }
-
-  void onEdit() {
-
-    // navigate edit page
+  // ── Fetch detail ──────────────────────────────────────────────────────────
+  void fetchItemDetail(String itemId) async {
+    try {
+      isLoading.value = true;
+      final result = await _inventoryService.getItemDetail(itemId);
+      itemDetail.value = result;
+    } on AppError catch (e) {
+      String message = e.message;
+      if (e.errors != null && e.errors!.isNotEmpty) {
+        message = e.errors![0]["message"] as String;
+      }
+      Get.snackbar(
+        "Gagal Memuat Data",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 12,
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Terjadi kesalahan, coba lagi nanti",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 12,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

@@ -1,81 +1,106 @@
 class LoanDetailModel {
+  final String id;
   final String status;
   final String loanCode;
-  final String borrowDate;
+  final String borrowedDate;
   final String returnDate;
-  final String itemName;
-  final String itemCode;
-  final String borrowerName;
-  final String borrowerPhone;
-  final String loanPurpose;
-  final String imageUrl;
+  final LoanUnitModel unit;
+  final LoanUserModel user;
+  final String purpose;
 
   LoanDetailModel({
+    required this.id,
     required this.status,
     required this.loanCode,
-    required this.borrowDate,
+    required this.borrowedDate,
     required this.returnDate,
-    required this.itemName,
-    required this.itemCode,
-    required this.borrowerName,
-    required this.borrowerPhone,
-    required this.loanPurpose,
-    required this.imageUrl,
+    required this.unit,
+    required this.user,
+    required this.purpose,
   });
 
   factory LoanDetailModel.fromJson(Map<String, dynamic> json) {
     return LoanDetailModel(
-      status: json['status'] ?? '',
-      loanCode: json['loan_code'] ?? '',
-      borrowDate: json['borrow_date'] ?? '',
-      returnDate: json['return_date'] ?? '',
-      itemName: json['item_name'] ?? '',
-      itemCode: json['item_code'] ?? '',
-      borrowerName: json['borrower_name'] ?? '',
-      borrowerPhone: json['borrower_phone'] ?? '',
-      loanPurpose: json['loan_purpose'] ?? '',
-      imageUrl: json['image_url'] ?? '',
+      id: json['id'] as String,
+      status: json['status'] as String,
+      loanCode: json['loanCode'] as String,
+      borrowedDate: json['borrowedDate'] as String,
+      returnDate: json['returnDate'] as String,
+      unit: LoanUnitModel.fromJson(json['unit'] as Map<String, dynamic>),
+      user: LoanUserModel.fromJson(json['user'] as Map<String, dynamic>),
+      purpose: json['purpose'] as String,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'loan_code': loanCode,
-      'borrow_date': borrowDate,
-      'return_date': returnDate,
-      'item_name': itemName,
-      'item_code': itemCode,
-      'borrower_name': borrowerName,
-      'borrower_phone': borrowerPhone,
-      'loan_purpose': loanPurpose,
-      'image_url': imageUrl,
-    };
-  }
+  // ── Convenience getters (dipakai di page) ─────────────────────────────────
+  String get borrowDate => borrowedDate;
+  String get itemName => unit.item.name;
+  String get itemCode => unit.itemUnitCode;
+  String get imageUrl => unit.item.image;
+  String get borrowerName => user.username;
+  String get borrowerPhone => user.phone;
+  String get loanPurpose => purpose;
+}
 
-  LoanDetailModel copyWith({
-    String? status,
-    String? loanCode,
-    String? borrowDate,
-    String? returnDate,
-    String? itemName,
-    String? itemCode,
-    String? borrowerName,
-    String? borrowerPhone,
-    String? loanPurpose,
-    String? imageUrl,
-  }) {
-    return LoanDetailModel(
-      status: status ?? this.status,
-      loanCode: loanCode ?? this.loanCode,
-      borrowDate: borrowDate ?? this.borrowDate,
-      returnDate: returnDate ?? this.returnDate,
-      itemName: itemName ?? this.itemName,
-      itemCode: itemCode ?? this.itemCode,
-      borrowerName: borrowerName ?? this.borrowerName,
-      borrowerPhone: borrowerPhone ?? this.borrowerPhone,
-      loanPurpose: loanPurpose ?? this.loanPurpose,
-      imageUrl: imageUrl ?? this.imageUrl,
+// ─────────────────────────────────────────────────────────────────────────────
+
+class LoanUnitModel {
+  final String id;
+  final String itemUnitCode;
+  final String status;
+  final LoanItemModel item;
+
+  LoanUnitModel({
+    required this.id,
+    required this.itemUnitCode,
+    required this.status,
+    required this.item,
+  });
+
+  factory LoanUnitModel.fromJson(Map<String, dynamic> json) {
+    return LoanUnitModel(
+      id: json['id'] as String,
+      itemUnitCode: json['itemUnitCode'] as String,
+      status: json['status'] as String,
+      item: LoanItemModel.fromJson(json['item'] as Map<String, dynamic>),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+class LoanItemModel {
+  final String name;
+  final String location;
+  final String image;
+
+  LoanItemModel({
+    required this.name,
+    required this.location,
+    required this.image,
+  });
+
+  factory LoanItemModel.fromJson(Map<String, dynamic> json) {
+    return LoanItemModel(
+      name: json['name'] as String,
+      location: json['location'] as String,
+      image: json['image'] as String,
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+class LoanUserModel {
+  final String username;
+  final String phone;
+
+  LoanUserModel({required this.username, required this.phone});
+
+  factory LoanUserModel.fromJson(Map<String, dynamic> json) {
+    return LoanUserModel(
+      username: json['username'] as String,
+      phone: json['phone'] as String,
     );
   }
 }

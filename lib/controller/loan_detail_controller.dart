@@ -1,64 +1,232 @@
 import 'package:admin_dashboard/models/detail_loan_model.dart';
+import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/services/detail_loan_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoanDetailController extends GetxController {
-  final LoanDetailService _service = LoanDetailService();
+  final LoanDetailService _loanService = LoanDetailService();
 
-  final Rx<LoanDetailModel> loanData = LoanDetailModel(
-    status: '',
-    loanCode: '',
-    borrowDate: '',
-    returnDate: '',
-    itemName: '',
-    itemCode: '',
-    borrowerName: '',
-    borrowerPhone: '',
-    loanPurpose: '',
-    imageUrl: '',
-  ).obs;
+  // ── Observable state ──────────────────────────────────────────────────────
+  final isLoading = false.obs;
+  final isActionLoading = false.obs;
+  final Rx<LoanDetailModel?> loanDetail = Rx<LoanDetailModel?>(null);
 
-  final RxBool isLoading = false.obs;
+  Rx<LoanDetailModel?> get loanData => loanDetail;
 
+  late String _loanId;
+
+  // ── Lifecycle ─────────────────────────────────────────────────────────────
   @override
   void onInit() {
     super.onInit();
-    loadLoanDetail();
+    _loanId = Get.arguments as String;
+    fetchLoanDetail(_loanId);
   }
 
-  Future<void> loadLoanDetail() async {
+  // ── Fetch detail ──────────────────────────────────────────────────────────
+  void fetchLoanDetail(String loanId) async {
     try {
       isLoading.value = true;
-
-      final response = await _service.getLoanDetail();
-
-      loanData.value = response;
+      final result = await _loanService.getLoanDetail(loanId);
+      print(result);
+      loanDetail.value = result;
+    } on AppError catch (e) {
+      _showError("Gagal Memuat Data", e);
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      _showGenericError();
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> approveLoan() async {
+  // ── Accept ────────────────────────────────────────────────────────────────
+  void approveLoan() async {
     try {
-      /// TODO:
-      /// Integrasi API approve loan
-
-      Get.snackbar('Success', 'Peminjaman disetujui');
+      isActionLoading.value = true;
+      final message = await _loanService.acceptLoan(_loanId);
+      Get.back(result: true);
+      Get.snackbar(
+        "Berhasil",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 12,
+      );
+    } on AppError catch (e) {
+      _showError("Gagal Menyetujui", e);
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      _showGenericError();
+    } finally {
+      isActionLoading.value = false;
     }
   }
 
-  Future<void> rejectLoan() async {
-    try {
-      /// TODO:
-      /// Integrasi API reject loan
+  // ── Reject — tampilkan dialog input alasan dulu ───────────────────────────
+  void rejectLoan() {
+    final reasonController = TextEditingController();
 
-      Get.snackbar('Success', 'Peminjaman ditolak');
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          "Tolak Peminjaman",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Masukkan alasan penolakan:",
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: reasonController,
+              maxLines: 3,
+              decoration: InputDecoration(
+                hintText: "Contoh: Stok tidak tersedia...",
+                hintStyle: const TextStyle(color: Colors.grey, fontSize: 13),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Color(0xFF8B2323)),
+                ),
+                contentPadding: const EdgeInsets.all(12),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          // Batal
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text("Batal", style: TextStyle(color: Colors.grey)),
+          ),
+          // Konfirmasi tolak
+          Obx(
+            () => ElevatedButton(
+              onPressed: isActionLoading.value
+                  ? null
+                  : () async {
+                      final reason = reasonController.text.trim();
+                      if (reason.isEmpty) {
+                        Get.snackbar(
+                          "Perhatian",
+                          "Alasan penolakan tidak boleh kosong",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.orange,
+                          colorText: Colors.white,
+                          margin: const EdgeInsets.all(12),
+                          borderRadius: 12,
+                        );
+                        return;
+                      }
+                      await _doRejectLoan(reason);
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF8B2323),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: isActionLoading.value
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Text("Tolak", style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  Future<void> _doRejectLoan(String reason) async {
+    try {
+      isActionLoading.value = true;
+      final message = await _loanService.rejectLoan(_loanId, reason);
+      Get.back(); // tutup dialog
+      Get.back(result: true); // balik ke list
+      Get.snackbar(
+        "Berhasil",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 12,
+      );
+    } on AppError catch (e) {
+      _showError("Gagal Menolak", e);
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      _showGenericError();
+    } finally {
+      isActionLoading.value = false;
     }
+  }
+
+  // ── Return ────────────────────────────────────────────────────────────────
+  void returnLoan() async {
+    try {
+      isActionLoading.value = true;
+      final message = await _loanService.returnLoan(_loanId);
+      Get.back(result: true);
+      Get.snackbar(
+        "Berhasil",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 12,
+      );
+    } on AppError catch (e) {
+      _showError("Gagal Mencatat Pengembalian", e);
+    } catch (e) {
+      _showGenericError();
+    } finally {
+      isActionLoading.value = false;
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  void _showError(String title, AppError e) {
+    String message = e.message;
+    if (e.errors != null && e.errors!.isNotEmpty) {
+      message = e.errors![0]["message"] as String;
+    }
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      margin: const EdgeInsets.all(12),
+      borderRadius: 12,
+    );
+  }
+
+  void _showGenericError() {
+    Get.snackbar(
+      "Error",
+      "Terjadi kesalahan, coba lagi nanti",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      margin: const EdgeInsets.all(12),
+      borderRadius: 12,
+    );
   }
 }

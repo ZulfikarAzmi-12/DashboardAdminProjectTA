@@ -1,12 +1,14 @@
 import 'package:admin_dashboard/components/button/home_button.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
+import 'package:admin_dashboard/utils/text_util.dart';
 import 'package:flutter/material.dart';
 
 class LoanCard extends StatelessWidget {
   final LoanData data;
+  final VoidCallback onPresed;
 
-  const LoanCard({super.key, required this.data});
+  const LoanCard({super.key, required this.data, required this.onPresed});
 
   Color getStatusColor() {
     switch (data.status) {
@@ -108,18 +110,14 @@ class LoanCard extends StatelessWidget {
                       ),
                     ),
 
-                    /// DATE
                     Container(
                       margin: EdgeInsets.only(top: 6),
-                      child: Row(
-                        children: [
-                          Icon(Icons.event, size: 14),
-                          SizedBox(width: 6),
-                          Text(
-                            "${data.borrowedDate} - ${data.returnDate}",
-                            style: TextStyle(color: AppColor.gray),
-                          ),
-                        ],
+                      child: Text(
+                        TextUtil.loanSchedule(
+                          DateTime.parse(data.borrowedDate),
+                          DateTime.parse(data.returnDate),
+                        ),
+                        style: TextStyle(color: AppColor.gray),
                       ),
                     ),
 
@@ -129,7 +127,7 @@ class LoanCard extends StatelessWidget {
                       width: double.infinity,
                       child: HomeButton(
                         text: "Lihat Detail",
-                        onPressed: () {},
+                        onPressed: onPresed,
                         isOutline: true,
                       ),
                     ),

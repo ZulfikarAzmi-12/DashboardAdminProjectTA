@@ -30,7 +30,14 @@ class InventarisController extends GetxController {
     try {
       final result = await service.getCategories();
 
+      // ── Reset dulu sebelum assign supaya tidak duplikat saat refresh ──
+      categories.clear();
       categories.value = ["All", ...result.map((e) => e.categoryName)];
+
+      // Reset selected ke "All" hanya kalau value sekarang tidak ada di list baru
+      if (!categories.contains(selectedCategory.value)) {
+        selectedCategory.value = "All";
+      }
     } on AppError catch (e) {
       String message = e.message;
 
@@ -46,6 +53,7 @@ class InventarisController extends GetxController {
         colorText: Colors.white,
       );
     } catch (e) {
+      print("error fetchCategories: $e");
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",

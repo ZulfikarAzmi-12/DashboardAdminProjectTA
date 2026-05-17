@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:admin_dashboard/services/auth_service.dart';
+import 'package:admin_dashboard/services/notif_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
 
   final AuthService _authService = AuthService();
+  final NotifService _notifService = NotifService();
 
   void login() async {
     try {
@@ -20,6 +22,12 @@ class AuthController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("accesToken", result.data.accesToken);
       await prefs.setString("role", result.data.role);
+
+      try {
+        await _notifService.initFCMToken(result.data.accesToken);
+      } catch (e) {
+        print("FCM gagal dikirim: $e");
+      }
 
       if (result.data.role != 'admin') {
         Get.snackbar(

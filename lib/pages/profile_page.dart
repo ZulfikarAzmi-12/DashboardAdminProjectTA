@@ -10,9 +10,11 @@ import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
+
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
@@ -29,48 +31,55 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Obx(() {
-            final profile = controller.profile.value;
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ── Bagian reactive (hanya profile data) ──────────────────
+              Obx(() {
+                final profile = controller.profile.value;
 
-            if (profile == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
+                if (profile == null) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProfileCard(name: profile.username, email: profile.email),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ProfileCard(name: profile.username, email: profile.email),
 
-                const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                MenuTile(
-                  title: "Ganti Password",
-                  icon: Icons.lock,
-                  onTap: () {
-                    Get.toNamed(AppRoutes.changePassword);
-                  },
-                ),
+                    MenuTile(
+                      title: "Ganti Password",
+                      icon: Icons.lock,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.changePassword);
+                      },
+                    ),
 
-                MenuTile(
-                  title: "Kelola User",
-                  icon: Icons.person,
-                  onTap: () {
-                    Get.toNamed(AppRoutes.manageUser);
-                  },
-                ),
+                    MenuTile(
+                      title: "Kelola User",
+                      icon: Icons.person,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.manageUser);
+                      },
+                    ),
+                  ],
+                );
+              }),
 
-                const Spacer(),
+              const Spacer(),
 
-                LongButton(
-                  backgroundColor: AppColor.primary,
-                  text: "Logout",
-                  onPressed: () {
-                    controller.logout();
-                  },
-                ),
-              ],
-            );
-          }),
+              // ── Tombol logout di luar Obx ──────────────────────────────
+              LongButton(
+                backgroundColor: AppColor.primary,
+                text: "Logout",
+                onPressed: () {
+                  controller.logout();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

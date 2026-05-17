@@ -1,11 +1,9 @@
 import 'package:admin_dashboard/controller/detail_inventory_controller.dart';
 import 'package:get/get.dart';
 
-class DetailInventoryBinding extends Bindings{
+class DetailInventoryBinding extends Bindings {
   @override
   void dependencies() {
-    // TODO: implement dependencies
-    Get.lazyPut<DetailInventoryController>(() => DetailInventoryController(),);
+    Get.lazyPut<DetailInventoryController>(() => DetailInventoryController());
   }
-
 }
