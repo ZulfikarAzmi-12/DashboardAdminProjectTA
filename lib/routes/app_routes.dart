@@ -17,4 +17,5 @@ class AppRoutes {
   static const listLoan = "/listLoan";
   static const detailLoan = "/detailLoan";
   static const detailInventory = "/detailInventory";
+  static const detailReport = "/detailReport";
 }
