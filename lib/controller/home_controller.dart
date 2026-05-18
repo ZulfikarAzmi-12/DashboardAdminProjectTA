@@ -18,12 +18,12 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     fetchLoans();
     fetchSummary();
-    super.onInit();
   }
 
-  void fetchLoans() async {
+  Future<void> fetchLoans() async {
     isLoading.value = true;
     isError.value = false;
 
@@ -51,12 +51,12 @@ class HomeController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    } finally {
+      isLoading.value = false;
     }
-
-    isLoading.value = false;
   }
 
-  void fetchSummary() async {
+  Future<void> fetchSummary() async {
     try {
       final result = await service.getSummary();
       summary.value = result;
@@ -65,7 +65,6 @@ class HomeController extends GetxController {
       if (e.errors != null && e.errors!.isNotEmpty) {
         message = e.errors![0]["message"];
       }
-
       Get.snackbar(
         "Error",
         message,
@@ -84,4 +83,7 @@ class HomeController extends GetxController {
       );
     }
   }
+
+  // ── Dipanggil RefreshIndicator — fetch semua sekaligus ────────────────
+  Future<void> refresh() => Future.wait([fetchSummary(), fetchLoans()]);
 }

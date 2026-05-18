@@ -8,31 +8,38 @@ import 'package:get/get.dart';
 class DetailInventoryController extends GetxController {
   final DetailInventoryService _inventoryService = DetailInventoryService();
 
-  // ── State ──────────────────────────────────────────────────────────────────
+  // ── STATE ─────────────────────────────────────────────
   final Rx<ItemDetailModel?> itemDetail = Rx<ItemDetailModel?>(null);
+
   final RxBool isLoading = false.obs;
   final RxBool isTogglingAvailability = false.obs;
 
   late String itemId;
+
+  // ── INIT ─────────────────────────────────────────────
   @override
   void onInit() {
-    // TODO: implement onInit
+    super.onInit();
+
     itemId = Get.arguments as String;
     fetchItemDetail(itemId);
-    super.onInit();
   }
 
-  // ── Fetch Detail ───────────────────────────────────────────────────────────
-  void fetchItemDetail(String itemId) async {
+  // ── FETCH DETAIL ──────────────────────────────────────
+  Future<void> fetchItemDetail(String itemId) async {
     try {
       isLoading.value = true;
+
       final result = await _inventoryService.getItemDetail(itemId);
+
       itemDetail.value = result;
     } on AppError catch (e) {
       String message = e.message;
+
       if (e.errors != null && e.errors!.isNotEmpty) {
         message = e.errors![0]["message"] as String;
       }
+
       Get.snackbar(
         "Gagal Memuat Data",
         message,
@@ -57,12 +64,16 @@ class DetailInventoryController extends GetxController {
     }
   }
 
-  // ── Toggle Availability ────────────────────────────────────────────────────
-  void toggleAvailability(String itemId) async {
+  // ── PUBLIC REFRESH (buat RefreshIndicator & after edit) ─
+  Future<void> refreshDetail() async {
+    await fetchItemDetail(itemId);
+  }
+
+  // ── TOGGLE AVAILABILITY ───────────────────────────────
+  Future<void> toggleAvailability(String itemId) async {
     try {
       isTogglingAvailability.value = true;
 
-      // Ambil status saat ini dari itemDetail, default false kalau null
       final currentStatus = itemDetail.value?.isAvailable ?? false;
 
       final message = await _inventoryService.toggleItemAvailability(
@@ -70,8 +81,8 @@ class DetailInventoryController extends GetxController {
         currentStatus,
       );
 
-      // Refresh detail supaya status terbaru langsung tampil
-      await _refreshItemDetail(itemId);
+      // refresh data setelah toggle
+      await refreshDetail();
 
       Get.snackbar(
         "Berhasil",
@@ -84,9 +95,11 @@ class DetailInventoryController extends GetxController {
       );
     } on AppError catch (e) {
       String message = e.message;
+
       if (e.errors != null && e.errors!.isNotEmpty) {
         message = e.errors![0]["message"] as String;
       }
+
       Get.snackbar(
         "Gagal Mengubah Status",
         message,
@@ -103,21 +116,9 @@ class DetailInventoryController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
-        margin: const EdgeInsets.all(12),
-        borderRadius: 12,
       );
     } finally {
       isTogglingAvailability.value = false;
-    }
-  }
-
-  // ── Private: silent refresh setelah toggle ─────────────────────────────────
-  Future<void> _refreshItemDetail(String itemId) async {
-    try {
-      final result = await _inventoryService.getItemDetail(itemId);
-      itemDetail.value = result;
-    } catch (_) {
-      // Gagal refresh tidak perlu snackbar — data lama tetap tampil
     }
   }
 }

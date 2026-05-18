@@ -23,6 +23,7 @@ class ListLoanController extends GetxController {
     "Dipinjam",
     "Dikembalikan",
     "Terlambat",
+    "Ditolak",
   ];
 
   @override

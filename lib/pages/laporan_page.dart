@@ -88,7 +88,13 @@ class ReportPage extends StatelessWidget {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-                      child: ReportCard(data: item),
+                      child: GestureDetector(
+                        onTap: () => Get.toNamed(
+                          AppRoutes.detailReport,
+                          arguments: item.id,
+                        ),
+                        child: ReportCard(data: item),
+                      ),
                     );
                   },
                 );

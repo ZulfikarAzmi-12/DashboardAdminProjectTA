@@ -5,8 +5,8 @@ class ItemDetailModel {
   final String itemCode;
   final String name;
   final String description;
-  final LocationModel location;
-  final CategoryModel category;
+  final DetailLocationModel location;
+  final DetailCategoryModel category;
   final ImageModel image;
   final bool isAvailable;
   final int totalUnit;
@@ -31,8 +31,12 @@ class ItemDetailModel {
       itemCode: json['itemCode'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
-      location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-      category: CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      location: DetailLocationModel.fromJson(
+        json['location'] as Map<String, dynamic>,
+      ),
+      category: DetailCategoryModel.fromJson(
+        json['category'] as Map<String, dynamic>,
+      ),
       image: ImageModel.fromJson(json['image'] as Map<String, dynamic>),
       isAvailable: json['isAvalible'] as bool,
       totalUnit: json['totalUnit'] as int,
@@ -43,65 +47,53 @@ class ItemDetailModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'itemCode': itemCode,
-        'name': name,
-        'description': description,
-        'location': location.toJson(),
-        'category': category.toJson(),
-        'image': image.toJson(),
-        'isAvalible': isAvailable,
-        'totalUnit': totalUnit,
-        'unit': unit.map((e) => e.toJson()).toList(),
-      };
+    'id': id,
+    'itemCode': itemCode,
+    'name': name,
+    'description': description,
+    'location': location.toJson(),
+    'category': category.toJson(),
+    'image': image.toJson(),
+    'isAvalible': isAvailable,
+    'totalUnit': totalUnit,
+    'unit': unit.map((e) => e.toJson()).toList(),
+  };
 }
 
 // ── Location ───────────────────────────────────────────────────────────────
 
-class LocationModel {
+class DetailLocationModel {
   final String id;
   final String locationName;
 
-  LocationModel({
-    required this.id,
-    required this.locationName,
-  });
+  DetailLocationModel({required this.id, required this.locationName});
 
-  factory LocationModel.fromJson(Map<String, dynamic> json) {
-    return LocationModel(
+  factory DetailLocationModel.fromJson(Map<String, dynamic> json) {
+    return DetailLocationModel(
       id: json['id'] as String,
       locationName: json['locationName'] as String,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'locationName': locationName,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'locationName': locationName};
 }
 
 // ── Category ───────────────────────────────────────────────────────────────
 
-class CategoryModel {
+class DetailCategoryModel {
   final String id;
   final String categoryName;
 
-  CategoryModel({
-    required this.id,
-    required this.categoryName,
-  });
+  DetailCategoryModel({required this.id, required this.categoryName});
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
+  factory DetailCategoryModel.fromJson(Map<String, dynamic> json) {
+    return DetailCategoryModel(
       id: json['id'] as String,
       categoryName: json['categoryName'] as String,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'categoryName': categoryName,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'categoryName': categoryName};
 }
 
 // ── Image ──────────────────────────────────────────────────────────────────
@@ -140,8 +132,8 @@ class UnitModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'itemUnitCode': itemUnitCode,
-        'status': status,
-      };
+    'id': id,
+    'itemUnitCode': itemUnitCode,
+    'status': status,
+  };
 }

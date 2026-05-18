@@ -136,7 +136,15 @@ class DetailInventoryPage extends StatelessWidget {
                                         controller.toggleAvailability(item.id),
                             ),
                             const SizedBox(width: 12),
-                            DetailInventoryButton(title: 'Edit', onTap: () {}),
+                            DetailInventoryButton(
+                              title: 'Edit',
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.editPage,
+                                  arguments: item,
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),

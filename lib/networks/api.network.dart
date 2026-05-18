@@ -1,4 +1,3 @@
 class ApiNetwork {
-  static final String BASE_URL =
-      "https://c1b2-129-227-90-146.ngrok-free.app/api/v1";
+  static final String BASE_URL = "http://192.168.0.2:8080/api/v1";
 }

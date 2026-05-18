@@ -31,147 +31,150 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (controller.isError.value) {
-            return Center(child: Text("Terjadi kesalahan"));
+            return const Center(child: Text("Terjadi kesalahan"));
           }
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Ringkasan",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.blacktext,
+          // ── RefreshIndicator wrap SingleChildScrollView ──────────────
+          return RefreshIndicator(
+            color: AppColor.primary,
+            onRefresh: controller.refresh,
+            child: SingleChildScrollView(
+              // ── Wajib agar RefreshIndicator selalu bisa dipicu ────────
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Ringkasan",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.blacktext,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: [
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width - 44) / 2,
-                        child: SummaryCard(
-                          title: "Total Barang",
-                          value:
-                              "${controller.summary.value?.totalItem ?? "0"}",
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width - 44) / 2,
-                        child: SummaryCard(
-                          title: "Dipinjam",
-                          value:
-                              "${controller.summary.value?.borrowedItem ?? "0"}",
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: (MediaQuery.of(context).size.width - 32) / 2,
-                        child: SummaryCard(
-                          title: "Barang Rusak",
-                          value:
-                              "${controller.summary.value?.damagedItem ?? "0"}",
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: Row(
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
                       children: [
-                        Expanded(
-                          child: HomeButton(
-                            text: "Tambah Barang",
-                            icon: Icons.add,
-                            onPressed: () {
-                              Get.toNamed(AppRoutes.addInventory);
-                            },
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width - 44) / 2,
+                          child: SummaryCard(
+                            title: "Total Barang",
+                            value:
+                                "${controller.summary.value?.totalItem ?? "0"}",
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 12),
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width - 44) / 2,
+                          child: SummaryCard(
+                            title: "Dipinjam",
+                            value:
+                                "${controller.summary.value?.borrowedItem ?? "0"}",
+                          ),
+                        ),
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width - 32) / 2,
+                          child: SummaryCard(
+                            title: "Barang Rusak",
+                            value:
+                                "${controller.summary.value?.damagedItem ?? "0"}",
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        children: [
+                          Expanded(
                             child: HomeButton(
-                              text: "Kelola User",
-                              icon: Icons.person,
+                              text: "Tambah Barang",
+                              icon: Icons.add,
                               onPressed: () {
-                                Get.toNamed(AppRoutes.manageUser);
+                                Get.toNamed(AppRoutes.addInventory);
                               },
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Peminjaman",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.blacktext,
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 12),
+                              child: HomeButton(
+                                text: "Kelola User",
+                                icon: Icons.person,
+                                onPressed: () {
+                                  Get.toNamed(AppRoutes.manageUser);
+                                },
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
 
-                        InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.listLoan);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "Lihat Semua",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                    Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Peminjaman",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.blacktext,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.listLoan);
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Lihat Semua",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.primary,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 14,
                                   color: AppColor.primary,
                                 ),
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 14,
-                                color: AppColor.primary,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  if (controller.loans.isEmpty)
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      alignment: Alignment.center,
-                      child: Text("Belum ada data"),
-                    )
-                  else
-                    RefreshIndicator(
-                      color: AppColor.primary,
-                      onRefresh: () async => controller.fetchLoans(),
-                      child: ListView.builder(
+
+                    if (controller.loans.isEmpty)
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        alignment: Alignment.center,
+                        child: const Text("Belum ada data"),
+                      )
+                    else
+                      ListView.builder(
                         shrinkWrap: true,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                        // ── NeverScrollableScrollPhysics karena scroll
+                        //    sudah dihandle SingleChildScrollView ─────────
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: controller.loans.length,
                         itemBuilder: (context, index) {
                           final loan = controller.loans[index];
-
                           return LoanCard(
                             data: loan,
                             onPresed: () => Get.toNamed(
@@ -181,10 +184,10 @@ class HomePage extends StatelessWidget {
                           );
                         },
                       ),
-                    ),
 
-                  SizedBox(height: 20),
-                ],
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           );
