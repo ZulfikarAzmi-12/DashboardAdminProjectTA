@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
+import 'package:admin_dashboard/components/button/detail_inventory_button.dart';
 import 'package:admin_dashboard/components/chip/detail_inventory_chip.dart';
 import 'package:admin_dashboard/components/tile/detail_inventory_tile.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
@@ -100,16 +101,6 @@ class DetailInventoryPage extends StatelessWidget {
                         label: 'Unit Tersedia',
                         value: '${item.totalUnit}',
                       ),
-                      const SizedBox(height: 6),
-
-                      // Ketersediaan
-                      _buildInfoRow(
-                        label: 'Status',
-                        value: item.isAvailable ? 'Tersedia' : 'Tidak Tersedia',
-                        valueColor: item.isAvailable
-                            ? Colors.green
-                            : Colors.red,
-                      ),
                       const SizedBox(height: 14),
 
                       // Chips lokasi & kategori
@@ -127,6 +118,28 @@ class DetailInventoryPage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 16),
+
+                      // ── Action Buttons: Nonaktifkan/Aktifkan & Edit ──────
+                      Obx(
+                        () => Row(
+                          children: [
+                            DetailInventoryButton(
+                              title: item.isAvailable
+                                  ? "Nonaktifkan"
+                                  : "Aktifkan",
+                              isLoading:
+                                  controller.isTogglingAvailability.value,
+                              onTap: controller.isTogglingAvailability.value
+                                  ? () {}
+                                  : () =>
+                                        controller.toggleAvailability(item.id),
+                            ),
+                            const SizedBox(width: 12),
+                            DetailInventoryButton(title: 'Edit', onTap: () {}),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -143,7 +156,7 @@ class DetailInventoryPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Deskripsi',
+                        'Description',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -164,7 +177,7 @@ class DetailInventoryPage extends StatelessWidget {
                 ),
               ),
 
-              // ── Header "Pilih Unit" ──────────────────────────────────────
+              // ── Header "Unit" ────────────────────────────────────────────
               SliverToBoxAdapter(
                 child: Container(
                   color: AppColor.white,
@@ -174,7 +187,7 @@ class DetailInventoryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Pilih Unit',
+                        'Unit',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,

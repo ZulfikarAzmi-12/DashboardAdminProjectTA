@@ -48,4 +48,49 @@ class DetailInventoryService {
       );
     }
   }
+
+  Future<String> toggleItemAvailability(
+    String itemId,
+    bool currentStatus,
+  ) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("accessToken");
+
+      final response = await http.patch(
+        Uri.parse("$BASE_URL/availability/$itemId"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+          "ngrok-skip-browser-warning": "true",
+        },
+        body: jsonEncode({
+          "isAvalible": !currentStatus, // toggle: true → false, false → true
+        }),
+      );
+
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode == 200 && body['status'] == 'success') {
+        return body['message'] as String;
+      }
+
+      throw AppError(
+        status: body['status'] ?? 'failed',
+        statusCode: body['statusCode'],
+        message: body['message'],
+        error: body['error'],
+        errors: body['errors'],
+      );
+    } catch (e) {
+      if (e is AppError) rethrow;
+      print("error toggle availability: $e");
+      throw AppError(
+        status: "error",
+        statusCode: 500,
+        message: "Terjadi kesalahan pada server",
+        error: e,
+      );
+    }
+  }
 }
