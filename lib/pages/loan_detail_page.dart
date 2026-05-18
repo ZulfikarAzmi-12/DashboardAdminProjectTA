@@ -1,7 +1,7 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/button/detail_loan_button.dart';
-import 'package:admin_dashboard/components/card/loan_detail_card.dart';
-import 'package:admin_dashboard/components/status/detail_loan_info.dart';
+import 'package:admin_dashboard/components/card/detail_loan_card.dart';
+import 'package:admin_dashboard/components/card/inventory_loan_card.dart';
 import 'package:admin_dashboard/components/status/detail_loan_status.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/loan_detail_controller.dart';
@@ -17,7 +17,6 @@ class LoanDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-
       appBar: CustomAppBar(
         title: "Detail Peminjaman",
         leading: IconButton(
@@ -25,7 +24,6 @@ class LoanDetailPage extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
       ),
-
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -38,7 +36,7 @@ class LoanDetailPage extends StatelessWidget {
         final loan = controller.loanData.value!;
 
         return Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Expanded(
@@ -46,7 +44,7 @@ class LoanDetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// STATUS + CODE
+                      /// STATUS + LOAN CODE (Header)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -54,69 +52,34 @@ class LoanDetailPage extends StatelessWidget {
                           Text(
                             loan.loanCode,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF8B2E28),
+                              color: AppColor.primary,
                             ),
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 24),
 
-                      /// DATE SECTION
-                      Row(
-                        children: [
-                          Expanded(
-                            child: DetailLoanInfo(
-                              title: 'Tgl Pinjam',
-                              value: loan.borrowDate,
-                              icon: Icons.calendar_today,
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: DetailLoanInfo(
-                              title: 'Tgl Kembali',
-                              value: loan.returnDate,
-                              icon: Icons.calendar_today,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      /// ITEM CARD
-                      LoanDetailCard(
+                      InventoryLoanCard(
                         itemName: loan.itemName,
                         itemCode: loan.itemCode,
                         imageUrl: loan.imageUrl,
                       ),
+                      const SizedBox(height: 20),
 
+                      DetailLoanCard(
+                        borrowerName: loan.borrowerName,
+                        borrowerPhone: loan.borrowerPhone,
+                        borrowDate: loan.borrowDate,
+                        returnDate: loan.returnDate,
+                        loanPurpose: loan.loanPurpose,
+                      ),
                       const SizedBox(height: 28),
-
-                      /// BORROWER
-                      DetailLoanInfo(
-                        title: 'Peminjam :',
-                        value: '${loan.borrowerName}\n${loan.borrowerPhone}',
-                        isColumn: true,
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      /// PURPOSE
-                      DetailLoanInfo(
-                        title: 'Dipinjam Untuk :',
-                        value: loan.loanPurpose,
-                        isColumn: true,
-                      ),
                     ],
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20),
 
               _buildActionButtons(loan.status),
             ],
@@ -135,7 +98,7 @@ class LoanDetailPage extends StatelessWidget {
     }
 
     switch (status.toLowerCase()) {
-      // ── Pending → Tolak + Setujui ─────────────────────────────────────
+      // ── Pending → Tolak + Setujui
       case "pending":
         return Row(
           children: [
@@ -160,7 +123,6 @@ class LoanDetailPage extends StatelessWidget {
             ),
           ],
         );
-
       // ── Dipinjam / Terlambat → Pengembalian ──────────────────────────
       case "dipinjam":
       case "terlambat":
@@ -175,7 +137,6 @@ class LoanDetailPage extends StatelessWidget {
           ),
         );
 
-      // ── Dikembalikan / Ditolak → tidak ada button ─────────────────────
       case "dikembalikan":
       case "ditolak":
         return const SizedBox.shrink();
