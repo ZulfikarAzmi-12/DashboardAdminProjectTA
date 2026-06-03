@@ -13,20 +13,45 @@ class AuthController extends GetxController {
   final AuthService _authService = AuthService();
   final NotifService _notifService = NotifService();
 
-  void login() async {
-    try {
-      String username = usernameController.text.toString();
-      String password = passwordController.text.toString();
+  final RxBool isLoading = false.obs;
+  final RxBool obscurePassword = true.obs;
 
-      final result = await _authService.login(username, password);
+  void togglePasswordVisibility() {
+    obscurePassword.value = !obscurePassword.value;
+  }
+
+  Future<void> login() async {
+    if (isLoading.value) return;
+
+    try {
+      isLoading.value = true;
+
+      String username = usernameController.text.trim();
+      String password = passwordController.text.trim();
+
+      final result = await _authService.login(
+        username,
+        password,
+      );
+
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("accesToken", result.data.accesToken);
-      await prefs.setString("role", result.data.role);
+
+      await prefs.setString(
+        "accesToken",
+        result.data.accesToken,
+      );
+
+      await prefs.setString(
+        "role",
+        result.data.role,
+      );
 
       try {
-        await _notifService.initFCMToken(result.data.accesToken);
+        await _notifService.initFCMToken(
+          result.data.accesToken,
+        );
       } catch (e) {
-        print("FCM gagal dikirim: $e");
+        debugPrint("FCM gagal dikirim: $e");
       }
 
       if (result.data.role != 'admin') {
@@ -37,7 +62,6 @@ class AuthController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-
         return;
       }
 
@@ -48,12 +72,15 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+
       Get.offNamed(AppRoutes.main);
     } on AppError catch (e) {
       String message = e.message;
+
       if (e.errors != null && e.errors!.isNotEmpty) {
-        message = e.errors![0]["message"]; // ambil error pertama
+        message = e.errors![0]["message"];
       }
+
       Get.snackbar(
         "Error",
         message,
@@ -69,12 +96,13 @@ class AuthController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    } finally {
+      isLoading.value = false;
     }
   }
 
   @override
   void onClose() {
-    // Bersihkan memori saat controller tidak dipakai
     usernameController.dispose();
     passwordController.dispose();
     super.onClose();

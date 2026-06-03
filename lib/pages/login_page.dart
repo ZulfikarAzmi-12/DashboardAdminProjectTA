@@ -1,10 +1,9 @@
-import 'package:admin_dashboard/components/button/long_button.dart';
+import 'package:admin_dashboard/components/button/login_button.dart';
 import 'package:admin_dashboard/components/textfield/login_textfield.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -22,7 +21,6 @@ class LoginPage extends StatelessWidget {
             children: [
               const SizedBox(height: 100),
 
-              // Judul Login
               const Text(
                 'Login',
                 style: TextStyle(
@@ -34,33 +32,35 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 60),
 
-              // Input Email
               LoginTextField(
                 hintText: 'example@gmail.com',
                 prefixIcon: Icons.email_outlined,
                 controller: authController.usernameController,
               ),
 
-              // Input Password
-              LoginTextField(
-                hintText: 'Password',
-                prefixIcon: Icons.lock_outline,
-                isPassword: true,
-                controller: authController.passwordController,
+              Obx(
+                () => LoginTextField(
+                  hintText: 'Password',
+                  prefixIcon: Icons.lock_outline,
+                  isPassword: true,
+                  controller: authController.passwordController,
+                  obscureText: authController.obscurePassword.value,
+                  onSuffixIconPressed: authController.togglePasswordVisibility,
+                ),
               ),
 
               const SizedBox(height: 40),
 
-              // Tombol Login
-              LongButton(
-                backgroundColor: AppColor.primary,
-                text: 'Login',
-                onPressed: () {
-                  authController.login();
-                },
+              Obx(
+                () => LoginButton(
+                  backgroundColor: AppColor.primary,
+                  text: 'Login',
+                  isLoading: authController.isLoading.value,
+                  onPressed: authController.isLoading.value
+                      ? null
+                      : authController.login,
+                ),
               ),
-
-              // Bagian "Belum punya akun" sudah dihapus dari sini
             ],
           ),
         ),
