@@ -66,3 +66,26 @@ class Item {
     return Item(name: json['name']);
   }
 }
+
+class ScheduleModel {
+  final String id;
+  final String borrowedDate;
+  final String returnDate;
+  final String status;
+
+  ScheduleModel({
+    required this.id,
+    required this.borrowedDate,
+    required this.returnDate,
+    required this.status,
+  });
+
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) {
+    return ScheduleModel(
+      id: json['id'] ?? '',
+      borrowedDate: json['borrowedDate'] ?? '',
+      returnDate: json['returnDate'] ?? '',
+      status: json['status'] ?? '',
+    );
+  }
+}

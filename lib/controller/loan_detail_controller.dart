@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/models/detail_loan_model.dart';
 import 'package:admin_dashboard/models/error_model.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:admin_dashboard/services/detail_loan_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,7 +183,7 @@ class LoanDetailController extends GetxController {
     try {
       isActionLoading.value = true;
       final message = await _loanService.returnLoan(_loanId);
-      Get.back(result: true);
+      Get.offAllNamed(AppRoutes.main);
       Get.snackbar(
         "Berhasil",
         message,
