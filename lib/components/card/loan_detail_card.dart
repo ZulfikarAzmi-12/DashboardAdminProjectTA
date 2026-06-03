@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 class LoanDetailCard extends StatelessWidget {
   final String itemName;
   final String itemCode;
-  final String imageUrl;
+  final String? imageUrl;
 
   const LoanDetailCard({
     super.key,
     required this.itemName,
     required this.itemCode,
-    required this.imageUrl,
+    this.imageUrl,
   });
 
-  // Reusable icon placeholder
   Widget get _placeholder =>
       const Icon(Icons.image_outlined, color: AppColor.lightgray, size: 34);
 
@@ -41,16 +40,13 @@ class LoanDetailCard extends StatelessWidget {
               color: AppColor.background,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: imageUrl.isEmpty
-                // ── 1. URL kosong → langsung icon ─────────────────────
+            child: (imageUrl == null || imageUrl!.isEmpty)
                 ? _placeholder
-                // ── 2. URL ada → coba load, siapkan fallback ──────────
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
-                      imageUrl,
+                      imageUrl!,
                       fit: BoxFit.cover,
-                      // Gagal load (404, timeout, dll) → icon
                       errorBuilder: (context, error, stackTrace) =>
                           _placeholder,
                     ),

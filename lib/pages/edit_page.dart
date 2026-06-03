@@ -18,7 +18,7 @@ class EditPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F5),
       appBar: CustomAppBar(
-        title: "Tambahkan Barang",
+        title: "Edit barang",
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Get.back(),

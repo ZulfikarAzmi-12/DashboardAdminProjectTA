@@ -67,12 +67,12 @@ class DetailInventoryTile extends StatelessWidget {
                     color: Color(0xFF1A1A2E),
                   ),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  'ID: ${unit.id}',
-                  style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
-                  overflow: TextOverflow.ellipsis,
-                ),
+                // const SizedBox(height: 2),
+                // Text(
+                //   'ID: ${unit.id}',
+                //   style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                //   overflow: TextOverflow.ellipsis,
+                // ),
               ],
             ),
           ),

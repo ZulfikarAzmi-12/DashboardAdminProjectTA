@@ -17,7 +17,7 @@ class ReportPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
-        title: "Inventaris",
+        title: "",
         actions: [
           IconButton(
             icon: Icon(Icons.notifications_none, color: AppColor.primary),
@@ -77,26 +77,42 @@ class ReportPage extends StatelessWidget {
                 }
 
                 if (controller.filteredReports.isEmpty) {
-                  return const Center(child: Text("Data tidak ditemukan"));
+                  return RefreshIndicator(
+                    onRefresh: () => controller.fetchReports(),
+                    color: AppColor.primary,
+                    child: CustomScrollView(
+                      physics:
+                          const AlwaysScrollableScrollPhysics(), // ← wajib!
+                      slivers: [
+                        SliverFillRemaining(
+                          child: Center(child: Text("Data tidak ditemukan")),
+                        ),
+                      ],
+                    ),
+                  );
                 }
 
-                return ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: controller.filteredReports.length,
-                  itemBuilder: (context, index) {
-                    final item = controller.filteredReports[index];
+                return RefreshIndicator(
+                  onRefresh: () => controller.fetchReports(),
+                  color: AppColor.primary,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: controller.filteredReports.length,
+                    itemBuilder: (context, index) {
+                      final item = controller.filteredReports[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: GestureDetector(
-                        onTap: () => Get.toNamed(
-                          AppRoutes.detailReport,
-                          arguments: item.id,
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: GestureDetector(
+                          onTap: () => Get.toNamed(
+                            AppRoutes.detailReport,
+                            arguments: item,
+                          ),
+                          child: ReportCard(data: item),
                         ),
-                        child: ReportCard(data: item),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               }),
             ),

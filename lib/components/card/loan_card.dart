@@ -114,8 +114,8 @@ class LoanCard extends StatelessWidget {
                       margin: EdgeInsets.only(top: 6),
                       child: Text(
                         TextUtil.loanSchedule(
-                          DateTime.parse(data.borrowedDate),
-                          DateTime.parse(data.returnDate),
+                          DateTime.parse(data.borrowedDate).toLocal(),
+                          DateTime.parse(data.returnDate).toLocal(),
                         ),
                         style: TextStyle(color: AppColor.gray),
                       ),

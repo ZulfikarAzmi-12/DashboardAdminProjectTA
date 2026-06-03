@@ -26,17 +26,13 @@ class DetailReportPage extends StatelessWidget {
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
-          final data = controller.loanDetail.value;
+          final data = controller.report.value;
 
           if (data == null) {
-            return const Center(
-              child: Text('Data tidak ditemukan'),
-            );
+            return const Center(child: Text('Data tidak ditemukan'));
           }
 
           return Container(
@@ -44,16 +40,13 @@ class DetailReportPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DetailLoanStatus(
-                  status: data.status,
-                ),
+                DetailLoanStatus(status: data.status),
 
                 Container(
                   margin: const EdgeInsets.only(top: 18),
                   child: LoanDetailCard(
-                    itemName: data.itemName,
-                    itemCode: data.itemCode,
-                    imageUrl: data.imageUrl,
+                    itemName: data.unit.itemName,
+                    itemCode: data.unit.itemUnitCode,
                   ),
                 ),
 
@@ -72,7 +65,7 @@ class DetailReportPage extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 8),
                   child: Text(
-                    data.borrowerName,
+                    data.user.username,
                     style: const TextStyle(
                       color: AppColor.blacktext,
                       fontSize: 18,
@@ -96,7 +89,7 @@ class DetailReportPage extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 8),
                   child: Text(
-                    data.reason,
+                    data.title,
                     style: const TextStyle(
                       color: AppColor.blacktext,
                       fontSize: 15,
@@ -108,9 +101,11 @@ class DetailReportPage extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 100),
                   child: LongButton(
-                    text: 'Proses',
-                    backgroundColor: AppColor.pending,
-                    onPressed: controller.processLoan,
+                    text: controller.buttonLabel,
+                    backgroundColor: controller.isPending
+                        ? AppColor.pending
+                        : AppColor.primary,
+                    onPressed: controller.processReport,
                   ),
                 ),
               ],

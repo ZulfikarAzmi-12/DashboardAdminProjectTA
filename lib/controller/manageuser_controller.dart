@@ -1,5 +1,4 @@
 import 'package:admin_dashboard/models/user_model.dart';
-import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:admin_dashboard/models/error_model.dart';
@@ -99,8 +98,8 @@ class ManageUserController extends GetxController {
         role: selectedRole.value,
       );
 
-      Get.toNamed(AppRoutes.manageUser);
-
+      Get.back();
+      fetchUsers();
       Get.snackbar(
         "Sukses",
         "User berhasil ditambahkan",

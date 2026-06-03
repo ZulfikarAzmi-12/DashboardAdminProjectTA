@@ -101,7 +101,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.notification,
-      page: () => NotificationPage(),
+      page: () => NotifPage(),
       binding: NotificationBinding(),
     ),
     GetPage(

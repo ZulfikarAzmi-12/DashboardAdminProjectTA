@@ -35,7 +35,7 @@ class DetailLoanStatus extends StatelessWidget {
         status,
         style: const TextStyle(
           color: AppColor.background,
-          fontSize: 15,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
         ),
       ),

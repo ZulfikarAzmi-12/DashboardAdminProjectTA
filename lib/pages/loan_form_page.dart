@@ -18,7 +18,7 @@ class LoanFormPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
-        title: "Tambahkan Peminjaman",
+        title: "Catat Peminjaman",
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Get.back(),

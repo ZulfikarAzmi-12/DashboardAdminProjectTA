@@ -24,7 +24,7 @@ class ReportController extends GetxController {
     super.onInit();
   }
 
-  void fetchReports() async {
+  Future<void> fetchReports() async {
     isLoading.value = true;
     isError.value = false;
 

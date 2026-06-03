@@ -39,7 +39,7 @@ class DetailLoanCard extends StatelessWidget {
           const Text(
             'Informasi Peminjam',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w600,
               color: AppColor.blacktext,
             ),
@@ -48,7 +48,7 @@ class DetailLoanCard extends StatelessWidget {
           _buildInfoRow('Nama:', borrowerName),
           const SizedBox(height: 8),
           _buildInfoRow('No Telepon:', borrowerPhone),
-          
+
           const SizedBox(height: 20),
           Divider(color: AppColor.lightgray, height: 1),
           const SizedBox(height: 20),
@@ -63,7 +63,7 @@ class DetailLoanCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          
+
           /// Tanggal Pinjam & Tanggal Kembali
           Row(
             children: [
@@ -74,7 +74,7 @@ class DetailLoanCard extends StatelessWidget {
                     Text(
                       'Tanggal Pinjam:',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: AppColor.gray,
                       ),
@@ -83,7 +83,7 @@ class DetailLoanCard extends StatelessWidget {
                     Text(
                       borrowDate,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: AppColor.blacktext,
                       ),
@@ -98,7 +98,7 @@ class DetailLoanCard extends StatelessWidget {
                     Text(
                       'Tanggal Kembali:',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: AppColor.gray,
                       ),
@@ -107,7 +107,7 @@ class DetailLoanCard extends StatelessWidget {
                     Text(
                       returnDate,
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: AppColor.blacktext,
                       ),
@@ -117,9 +117,9 @@ class DetailLoanCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           /// Keterangan/Tujuan
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +127,7 @@ class DetailLoanCard extends StatelessWidget {
               Text(
                 'Keterangan:',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey[700],
                 ),
@@ -136,7 +136,7 @@ class DetailLoanCard extends StatelessWidget {
               Text(
                 loanPurpose,
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Color(0xFF424242),
                 ),
@@ -157,7 +157,7 @@ class DetailLoanCard extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 15,
             fontWeight: FontWeight.w500,
             color: Colors.grey[700],
           ),
@@ -166,7 +166,7 @@ class DetailLoanCard extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
             color: Color(0xFF212121),
           ),

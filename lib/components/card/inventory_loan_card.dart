@@ -59,7 +59,7 @@ class InventoryLoanCard extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                      loadingProgress.expectedTotalBytes!
                                 : null,
                           ),
                         );
@@ -85,7 +85,7 @@ class InventoryLoanCard extends StatelessWidget {
                 Text(
                   itemName,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColor.blacktext,
                   ),
@@ -96,7 +96,7 @@ class InventoryLoanCard extends StatelessWidget {
                 Text(
                   itemCode,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: AppColor.gray,
                   ),
