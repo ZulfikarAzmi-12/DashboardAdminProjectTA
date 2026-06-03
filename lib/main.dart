@@ -1,10 +1,12 @@
 import 'package:admin_dashboard/firebase_options.dart';
 import 'package:admin_dashboard/routes/app_pages.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
+import 'package:admin_dashboard/services/notif_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,9 +14,26 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await _requestPermissions();
+  final NotifService notifService = NotifService();
 
-  runApp(const MyApp());
+  final prefs = await SharedPreferences.getInstance();
 
+  final token = prefs.getString("accessToken");
+
+  if (token != null && token.isNotEmpty) {
+    await notifService.initFCMToken(token);
+  }
+
+  String initialRoute = AppRoutes.splash;
+
+  RemoteMessage? initialMessage = await FirebaseMessaging.instance
+      .getInitialMessage();
+
+  if (initialMessage != null) {
+    initialRoute = AppRoutes.notification;
+  }
+
+  runApp(MyApp(initialRoute: initialRoute));
   _setupFCMListener();
 }
 
@@ -24,9 +43,9 @@ Future<void> _requestPermissions() async {
   NotificationSettings settings = await messaging.requestPermission();
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print("user mengizinkan permissions");
+    print("User mengizinkan notification");
   } else {
-    print("user tidak mengizinkan permissions");
+    print("User tidak mengizinkan notification");
   }
 }
 
@@ -46,28 +65,25 @@ void _setupFCMListener() {
         margin: const EdgeInsets.all(12),
         borderRadius: 12,
         duration: const Duration(seconds: 3),
+        backgroundColor: Color(0xFFFFFFFF),
       );
     }
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    Get.toNamed(AppRoutes.main);
+    Get.toNamed(AppRoutes.notification);
   });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      initialRoute: AppRoutes.splash,
+      initialRoute: initialRoute,
       getPages: AppPages.pages,
     );
   }
