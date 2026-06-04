@@ -1,3 +1,3 @@
 class ApiNetwork {
-  static final String BASE_URL = "http://10.10.12.202:8080/api/v1";
+  static final String BASE_URL = "http://192.168.82.41:8080/api/v1";
 }
