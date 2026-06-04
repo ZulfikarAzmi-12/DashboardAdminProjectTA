@@ -25,8 +25,11 @@ class ChangePasswordController extends GetxController {
         Get.snackbar(
           "Error",
           "Semua field harus diisi",
-          backgroundColor: Colors.red,
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: const Color(0xFFFFA726),
           colorText: Colors.white,
+          margin: const EdgeInsets.all(12),
+          borderRadius: 8,
         );
         return;
       }
@@ -44,8 +47,11 @@ class ChangePasswordController extends GetxController {
       Get.snackbar(
         "Sukses",
         "Password berhasil diubah",
-        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -57,15 +63,21 @@ class ChangePasswordController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;

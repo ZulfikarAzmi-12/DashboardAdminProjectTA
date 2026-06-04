@@ -46,8 +46,10 @@ class LocationController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       isError.value = true;
@@ -58,8 +60,10 @@ class LocationController extends GetxController {
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     }
 
@@ -85,8 +89,10 @@ class LocationController extends GetxController {
           "Error",
           "Nama lokasi wajib diisi",
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
+          backgroundColor: const Color(0xFFFFA726),
           colorText: Colors.white,
+          margin: const EdgeInsets.all(12),
+          borderRadius: 8,
         );
 
         return;
@@ -102,8 +108,10 @@ class LocationController extends GetxController {
         "Success",
         "Berhasil menambahkan lokasi",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -116,16 +124,20 @@ class LocationController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     }
   }
@@ -152,9 +164,11 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil update lokasi",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -166,17 +180,21 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     }
   }

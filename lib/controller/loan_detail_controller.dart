@@ -50,11 +50,11 @@ class LoanDetailController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Menyetujui", e);
@@ -120,11 +120,11 @@ class LoanDetailController extends GetxController {
                         Get.snackbar(
                           "Perhatian",
                           "Alasan penolakan tidak boleh kosong",
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.orange,
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: const Color(0xFFFFA726),
                           colorText: Colors.white,
                           margin: const EdgeInsets.all(12),
-                          borderRadius: 12,
+                          borderRadius: 8,
                         );
                         return;
                       }
@@ -163,11 +163,11 @@ class LoanDetailController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orange,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFFFA726),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Menolak", e);
@@ -187,11 +187,11 @@ class LoanDetailController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Mencatat Pengembalian", e);
@@ -211,11 +211,11 @@ class LoanDetailController extends GetxController {
     Get.snackbar(
       title,
       message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: const Color(0xFFE57373),
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
-      borderRadius: 12,
+      borderRadius: 8,
     );
   }
 
@@ -223,11 +223,11 @@ class LoanDetailController extends GetxController {
     Get.snackbar(
       "Error",
       "Terjadi kesalahan, coba lagi nanti",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: const Color(0xFFE57373),
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
-      borderRadius: 12,
+      borderRadius: 8,
     );
   }
 }

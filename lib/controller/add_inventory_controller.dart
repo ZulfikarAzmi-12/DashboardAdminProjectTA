@@ -94,8 +94,10 @@ class AddInventoryController extends GetxController {
       "Validasi",
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.orange,
+      backgroundColor: const Color(0xFFFFA726),
       colorText: Colors.white,
+      margin: const EdgeInsets.all(12),
+      borderRadius: 8,
     );
   }
 
@@ -147,8 +149,10 @@ class AddInventoryController extends GetxController {
         "Success",
         "Berhasil menambahkan inventory",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
 
       // reset form
@@ -171,16 +175,20 @@ class AddInventoryController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoadingCreate.value = false;

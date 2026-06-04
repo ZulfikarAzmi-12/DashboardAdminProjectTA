@@ -63,9 +63,10 @@ void _setupFCMListener() {
         notification.body ?? "Ada pesan baru",
         snackPosition: SnackPosition.TOP,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
         duration: const Duration(seconds: 3),
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFF42A5F5),
+        colorText: Colors.white,
       );
     }
   });

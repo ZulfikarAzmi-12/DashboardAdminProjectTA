@@ -43,21 +43,21 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Gagal Memuat Data",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan, coba lagi nanti",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;
@@ -87,11 +87,11 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColor.primary,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -103,19 +103,21 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Gagal Mengubah Status",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan, coba lagi nanti",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isTogglingAvailability.value = false;
