@@ -89,8 +89,46 @@ class AddInventoryController extends GetxController {
   }
 
   RxBool isLoadingCreate = false.obs;
+  void _showValidationSnackbar(String message) {
+    Get.snackbar(
+      "Validasi",
+      message,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.orange,
+      colorText: Colors.white,
+    );
+  }
+
+  bool validateForm() {
+    if (namaController.text.trim().isEmpty) {
+      _showValidationSnackbar("Nama barang tidak boleh kosong");
+      return false;
+    }
+    if (descController.text.trim().isEmpty) {
+      _showValidationSnackbar("Deskripsi tidak boleh kosong");
+      return false;
+    }
+    if (selectedCategory.value.isEmpty) {
+      _showValidationSnackbar("Category tidak boleh kosong");
+      return false;
+    }
+    if (selectedLocation.value.isEmpty) {
+      _showValidationSnackbar("Location tidak boleh kosong");
+      return false;
+    }
+    if (jumlahController.text.trim().isEmpty) {
+      _showValidationSnackbar("Jumlah unit tidak boleh kosong");
+      return false;
+    }
+    if (selectedImage.value == null) {
+      _showValidationSnackbar("Gambar tidak boleh kosong");
+      return false;
+    }
+    return true;
+  }
 
   Future<void> createInventory() async {
+    if (!validateForm()) return;
     try {
       isLoadingCreate.value = true;
 
