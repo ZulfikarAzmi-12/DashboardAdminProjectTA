@@ -56,7 +56,7 @@ class ListLoanController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -64,7 +64,7 @@ class ListLoanController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

@@ -99,7 +99,7 @@ class LoanController extends GetxController {
       Get.snackbar(
         'Perhatian',
         'Semua field wajib diisi',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
       return;
     }
@@ -120,7 +120,7 @@ class LoanController extends GetxController {
       Get.snackbar(
         'Berhasil',
         'Peminjaman berhasil dicatat',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
 
       Get.offAllNamed(AppRoutes.main);
@@ -128,7 +128,7 @@ class LoanController extends GetxController {
       Get.snackbar(
         'Gagal',
         e is AppError ? e.message : 'Gagal meminjam unit',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     } finally {
       isLoadingBorrow(false);

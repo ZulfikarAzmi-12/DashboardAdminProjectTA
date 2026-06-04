@@ -43,7 +43,7 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Gagal Memuat Data",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
@@ -53,7 +53,7 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan, coba lagi nanti",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
@@ -87,7 +87,7 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: AppColor.primary,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
@@ -103,7 +103,7 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Gagal Mengubah Status",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
@@ -113,7 +113,7 @@ class DetailInventoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan, coba lagi nanti",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
