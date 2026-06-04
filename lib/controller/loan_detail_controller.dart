@@ -132,7 +132,7 @@ class LoanDetailController extends GetxController {
                       await _doRejectLoan(reason);
                     },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8B2323),
+                backgroundColor: AppColor.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
