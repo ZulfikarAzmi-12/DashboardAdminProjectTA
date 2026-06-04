@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
+import 'package:admin_dashboard/components/button/login_button.dart';
 import 'package:admin_dashboard/components/button/long_button.dart';
 import 'package:admin_dashboard/components/button/profile_menu.dart';
 import 'package:admin_dashboard/components/card/profile-card.dart';
@@ -70,13 +71,39 @@ class ProfilePage extends StatelessWidget {
 
               const Spacer(),
 
-              // ── Tombol logout di luar Obx ──────────────────────────────
-              LongButton(
-                backgroundColor: AppColor.primary,
-                text: "Logout",
-                onPressed: () {
-                  controller.logout();
-                },
+              
+              Obx(
+                () => LoginButton(
+                  backgroundColor: AppColor.primary,
+                  text: "Logout",
+                  isLoading: controller.isLogoutLoading.value,
+                  onPressed: controller.isLogoutLoading.value
+                      ? null
+                      : () {
+                          Get.dialog(
+                            AlertDialog(
+                              title: const Text("Peringatan"),
+                              content: const Text("Apakah anda ingin logout?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: const Text("Batal"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back(); // tutup dialog
+
+                                    controller.logout();
+                                  },
+                                  child: const Text("Yes"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                ),
               ),
             ],
           ),

@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
 
               LoginTextField(
                 hintText: 'example@gmail.com',
-                prefixIcon: Icons.email_outlined,
+                prefixIcon: Icons.person,
                 controller: authController.usernameController,
               ),
 

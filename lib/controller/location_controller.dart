@@ -45,7 +45,7 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -57,7 +57,7 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -84,7 +84,7 @@ class LocationController extends GetxController {
         Get.snackbar(
           "Error",
           "Nama lokasi wajib diisi",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -101,7 +101,7 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil menambahkan lokasi",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -115,7 +115,7 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -123,7 +123,7 @@ class LocationController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

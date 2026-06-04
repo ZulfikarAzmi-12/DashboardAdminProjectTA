@@ -25,10 +25,19 @@ class ManageUserController extends GetxController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
+
   var selectedRole = ''.obs;
 
+  /// ================= CLEAR FORM =================
+  void clearForm() {
+    nameController.clear();
+    emailController.clear();
+    phoneController.clear();
+    selectedRole.value = '';
+  }
+
   /// ================= FETCH USERS =================
-  void fetchUsers() async {
+  Future<void> fetchUsers() async {
     isLoading.value = true;
     isError.value = false;
 
@@ -50,12 +59,12 @@ class ManageUserController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     } catch (e) {
-      print("ERROR: $e");
+      debugPrint("FETCH USERS ERROR: $e");
 
       isError.value = true;
       errorMessage.value = "Terjadi kesalahan";
@@ -63,7 +72,7 @@ class ManageUserController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -72,6 +81,7 @@ class ManageUserController extends GetxController {
     }
   }
 
+  /// ================= CREATE USER =================
   Future<void> createUser() async {
     try {
       isLoading.value = true;
@@ -84,7 +94,7 @@ class ManageUserController extends GetxController {
         Get.snackbar(
           "Error",
           "Semua field harus diisi",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -98,12 +108,19 @@ class ManageUserController extends GetxController {
         role: selectedRole.value,
       );
 
+      // Bersihkan form
+      clearForm();
+
+      // Tutup dialog/page
       Get.back();
-      fetchUsers();
+
+      // Refresh data
+      await fetchUsers();
+
       Get.snackbar(
         "Sukses",
         "User berhasil ditambahkan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -117,17 +134,17 @@ class ManageUserController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     } catch (e) {
-      print("ERROR CREATE USER: $e");
+      debugPrint("CREATE USER ERROR: $e");
 
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -136,18 +153,20 @@ class ManageUserController extends GetxController {
     }
   }
 
+  /// ================= DELETE USER =================
   Future<void> deleteUser(String userId) async {
     try {
       isLoading.value = true;
       isError.value = false;
 
       await _service.deleteUser(userId);
+
       users.removeWhere((e) => e.id == userId);
 
       Get.snackbar(
         "Sukses",
         "User berhasil dihapus",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -161,22 +180,34 @@ class ManageUserController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     } catch (e) {
-      print("DELETE ERROR: $e");
+      debugPrint("DELETE USER ERROR: $e");
 
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     } finally {
       isLoading.value = false;
     }
+  }
+
+  /// ================= DISPOSE =================
+  @override
+  void onClose() {
+    clearForm();
+
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+
+    super.onClose();
   }
 }

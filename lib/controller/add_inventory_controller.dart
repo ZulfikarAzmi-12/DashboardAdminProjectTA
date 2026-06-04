@@ -45,12 +45,12 @@ class AddInventoryController extends GetxController {
 
       categoryList.value = categories;
     } on AppError catch (e) {
-      Get.snackbar("Error", e.message, snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.message, snackPosition: SnackPosition.TOP);
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan category",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     } finally {
       isLoadingCategory.value = false;
@@ -65,12 +65,12 @@ class AddInventoryController extends GetxController {
 
       locationList.value = locations;
     } on AppError catch (e) {
-      Get.snackbar("Error", e.message, snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error", e.message, snackPosition: SnackPosition.TOP);
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan location",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     } finally {
       isLoadingLocation.value = false;
@@ -108,7 +108,7 @@ class AddInventoryController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil menambahkan inventory",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -132,7 +132,7 @@ class AddInventoryController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -140,7 +140,7 @@ class AddInventoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

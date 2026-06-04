@@ -21,13 +21,40 @@ class AuthController extends GetxController {
   }
 
   Future<void> login() async {
+    // Ambil input
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
+
+    // Validasi email kosong
+    if (username.isEmpty) {
+      Get.snackbar(
+        "Error",
+        "Harap isi username anda",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+   
+    // Validasi password kosong
+    if (password.isEmpty) {
+      Get.snackbar(
+        "Error",
+        "Harap isi password anda",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // Hindari spam klik
     if (isLoading.value) return;
 
     try {
       isLoading.value = true;
-
-      String username = usernameController.text.trim();
-      String password = passwordController.text.trim();
 
       final result = await _authService.login(
         username,
@@ -58,7 +85,7 @@ class AuthController extends GetxController {
         Get.snackbar(
           "Error",
           "Kamu bukan admin",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -68,7 +95,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Success",
         result.message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -84,15 +111,17 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     } catch (e) {
+      debugPrint("Login Error: $e");
+
       Get.snackbar(
         "Error",
-        "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        "Terjadi kesalahan pada server",
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

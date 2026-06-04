@@ -45,7 +45,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -56,7 +56,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -73,7 +73,7 @@ class CategoryController extends GetxController {
         Get.snackbar(
           "Error",
           "Nama category wajib diisi",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -90,7 +90,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil menambahkan category",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -104,7 +104,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -112,7 +112,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -128,7 +128,7 @@ class CategoryController extends GetxController {
         Get.snackbar(
           "Error",
           "Nama category wajib diisi",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
@@ -151,7 +151,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil update category",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -165,7 +165,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -173,7 +173,7 @@ class CategoryController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );

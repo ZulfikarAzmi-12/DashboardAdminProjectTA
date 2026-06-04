@@ -7,20 +7,21 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
+  final AccountService service = AccountService();
+
+  Rxn<AccountModel> profile = Rxn<AccountModel>();
+
+  final RxBool isLogoutLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
     fetchProfile();
   }
 
-  final AccountService service = AccountService();
-
-  Rxn<AccountModel> profile = Rxn<AccountModel>();
-
-  void fetchProfile() async {
+  Future<void> fetchProfile() async {
     try {
       final result = await service.getProfile();
-
       profile.value = result;
     } on AppError catch (e) {
       String message = e.message;
@@ -32,7 +33,7 @@ class ProfileController extends GetxController {
       Get.snackbar(
         "Error",
         message,
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -40,7 +41,7 @@ class ProfileController extends GetxController {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -48,10 +49,18 @@ class ProfileController extends GetxController {
   }
 
   Future<void> logout() async {
+    if (isLogoutLoading.value) return;
+
     try {
+      isLogoutLoading.value = true;
+
+      // Supaya user sempat melihat loading
+      await Future.delayed(const Duration(milliseconds: 800));
+
       final prefs = await SharedPreferences.getInstance();
 
-      await prefs.remove("accessToken");
+      // Sesuaikan dengan key yang kamu gunakan saat login
+      await prefs.remove("accesToken");
       await prefs.remove("role");
 
       Get.offAllNamed(AppRoutes.login);
@@ -59,7 +68,7 @@ class ProfileController extends GetxController {
       Get.snackbar(
         "Success",
         "Berhasil logout",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
@@ -67,10 +76,12 @@ class ProfileController extends GetxController {
       Get.snackbar(
         "Error",
         "Gagal logout",
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    } finally {
+      isLogoutLoading.value = false;
     }
   }
 }
