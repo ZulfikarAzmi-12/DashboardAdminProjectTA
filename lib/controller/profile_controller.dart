@@ -34,16 +34,20 @@ class ProfileController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     }
   }
@@ -69,16 +73,20 @@ class ProfileController extends GetxController {
         "Success",
         "Berhasil logout",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
         "Error",
         "Gagal logout",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLogoutLoading.value = false;

@@ -59,6 +59,8 @@ class ListLoanController extends GetxController {
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
@@ -67,6 +69,8 @@ class ListLoanController extends GetxController {
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;

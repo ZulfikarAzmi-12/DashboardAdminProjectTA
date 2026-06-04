@@ -31,21 +31,24 @@ class AuthController extends GetxController {
         "Error",
         "Harap isi username anda",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFFFA726),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
       return;
     }
 
-   
     // Validasi password kosong
     if (password.isEmpty) {
       Get.snackbar(
         "Error",
         "Harap isi password anda",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFFFA726),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
       return;
     }
@@ -56,27 +59,16 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
 
-      final result = await _authService.login(
-        username,
-        password,
-      );
+      final result = await _authService.login(username, password);
 
       final prefs = await SharedPreferences.getInstance();
 
-      await prefs.setString(
-        "accesToken",
-        result.data.accesToken,
-      );
+      await prefs.setString("accesToken", result.data.accesToken);
 
-      await prefs.setString(
-        "role",
-        result.data.role,
-      );
+      await prefs.setString("role", result.data.role);
 
       try {
-        await _notifService.initFCMToken(
-          result.data.accesToken,
-        );
+        await _notifService.initFCMToken(result.data.accesToken);
       } catch (e) {
         debugPrint("FCM gagal dikirim: $e");
       }
@@ -86,8 +78,10 @@ class AuthController extends GetxController {
           "Error",
           "Kamu bukan admin",
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
+          backgroundColor: const Color(0xFFE57373),
           colorText: Colors.white,
+          margin: const EdgeInsets.all(12),
+          borderRadius: 8,
         );
         return;
       }
@@ -96,8 +90,10 @@ class AuthController extends GetxController {
         "Success",
         result.message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
 
       Get.offNamed(AppRoutes.main);
@@ -112,8 +108,10 @@ class AuthController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       debugPrint("Login Error: $e");
@@ -122,8 +120,10 @@ class AuthController extends GetxController {
         "Error",
         "Terjadi kesalahan pada server",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;

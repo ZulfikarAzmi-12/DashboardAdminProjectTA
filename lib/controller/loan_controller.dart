@@ -69,7 +69,11 @@ class LoanController extends GetxController {
       Get.snackbar(
         'Gagal',
         e is AppError ? e.message : 'Gagal mengambil jadwal',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoadingSchedule(false);
@@ -85,7 +89,11 @@ class LoanController extends GetxController {
       Get.snackbar(
         'Gagal',
         e is AppError ? e.message : 'Gagal mengambil daftar peminjam',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     }
   }
@@ -100,6 +108,10 @@ class LoanController extends GetxController {
         'Perhatian',
         'Semua field wajib diisi',
         snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFFFA726),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
       return;
     }
@@ -121,6 +133,10 @@ class LoanController extends GetxController {
         'Berhasil',
         'Peminjaman berhasil dicatat',
         snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
 
       Get.offAllNamed(AppRoutes.main);
@@ -129,6 +145,10 @@ class LoanController extends GetxController {
         'Gagal',
         e is AppError ? e.message : 'Gagal meminjam unit',
         snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFE57373),
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoadingBorrow(false);

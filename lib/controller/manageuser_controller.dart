@@ -60,8 +60,10 @@ class ManageUserController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       debugPrint("FETCH USERS ERROR: $e");
@@ -73,8 +75,10 @@ class ManageUserController extends GetxController {
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;
@@ -95,8 +99,10 @@ class ManageUserController extends GetxController {
           "Error",
           "Semua field harus diisi",
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
+          backgroundColor: const Color(0xFFFFA726),
           colorText: Colors.white,
+          margin: const EdgeInsets.all(12),
+          borderRadius: 8,
         );
         return;
       }
@@ -121,8 +127,10 @@ class ManageUserController extends GetxController {
         "Sukses",
         "User berhasil ditambahkan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -135,8 +143,10 @@ class ManageUserController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       debugPrint("CREATE USER ERROR: $e");
@@ -145,8 +155,10 @@ class ManageUserController extends GetxController {
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;
@@ -167,8 +179,10 @@ class ManageUserController extends GetxController {
         "Sukses",
         "User berhasil dihapus",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -181,8 +195,10 @@ class ManageUserController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       debugPrint("DELETE USER ERROR: $e");
@@ -191,8 +207,10 @@ class ManageUserController extends GetxController {
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;

@@ -71,7 +71,6 @@ class ProfilePage extends StatelessWidget {
 
               const Spacer(),
 
-              
               Obx(
                 () => LoginButton(
                   backgroundColor: AppColor.primary,
@@ -81,26 +80,134 @@ class ProfilePage extends StatelessWidget {
                       ? null
                       : () {
                           Get.dialog(
-                            AlertDialog(
-                              title: const Text("Peringatan"),
-                              content: const Text("Apakah anda ingin logout?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: const Text("Batal"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back(); // tutup dialog
+                            Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    // Icon
+                                    Container(
+                                      width: 64,
+                                      height: 64,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.shade50,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        Icons.logout_rounded,
+                                        color: Colors.red.shade400,
+                                        size: 32,
+                                      ),
+                                    ),
 
-                                    controller.logout();
-                                  },
-                                  child: const Text("Yes"),
+                                    const SizedBox(height: 16),
+
+                                    // Title
+                                    const Text(
+                                      "Logout",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 8),
+
+                                    // Subtitle
+                                    const Text(
+                                      "Apakah anda yakin ingin keluar\ndari aplikasi ini?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black45,
+                                        height: 1.5,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 24),
+
+                                    // Divider
+                                    const Divider(
+                                      height: 1,
+                                      color: Color(0xffF0F0F0),
+                                    ),
+
+                                    const SizedBox(height: 16),
+
+                                    // Buttons
+                                    Row(
+                                      children: [
+                                        // Batal
+                                        Expanded(
+                                          child: OutlinedButton(
+                                            onPressed: () => Get.back(),
+                                            style: OutlinedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 12,
+                                                  ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              side: const BorderSide(
+                                                color: Color(0xffE0E0E0),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              "Batal",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        const SizedBox(width: 12),
+
+                                        // Logout
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              controller.logout();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 12,
+                                                  ),
+                                              backgroundColor:
+                                                  Colors.red.shade400,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              elevation: 0,
+                                            ),
+                                            child: const Text(
+                                              "Logout",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
+                            barrierDismissible: true,
                           );
                         },
                 ),

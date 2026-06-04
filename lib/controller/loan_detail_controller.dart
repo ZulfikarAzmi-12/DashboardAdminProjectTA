@@ -51,11 +51,11 @@ class LoanDetailController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Menyetujui", e);
@@ -125,7 +125,7 @@ class LoanDetailController extends GetxController {
                           backgroundColor: Colors.orange,
                           colorText: Colors.white,
                           margin: const EdgeInsets.all(12),
-                          borderRadius: 12,
+                          borderRadius: 8,
                         );
                         return;
                       }
@@ -164,11 +164,11 @@ class LoanDetailController extends GetxController {
       Get.snackbar(
         "Berhasil",
         message,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orange,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFFFFA726),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Menolak", e);
@@ -192,7 +192,7 @@ class LoanDetailController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       _showError("Gagal Mencatat Pengembalian", e);
@@ -216,7 +216,7 @@ class LoanDetailController extends GetxController {
       backgroundColor: Colors.red,
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
-      borderRadius: 12,
+      borderRadius: 8,
     );
   }
 
@@ -228,7 +228,7 @@ class LoanDetailController extends GetxController {
       backgroundColor: Colors.red,
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
-      borderRadius: 12,
+      borderRadius: 8,
     );
   }
 }

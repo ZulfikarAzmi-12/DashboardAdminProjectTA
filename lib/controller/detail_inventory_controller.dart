@@ -47,7 +47,7 @@ class DetailInventoryController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
@@ -57,7 +57,7 @@ class DetailInventoryController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;
@@ -91,7 +91,7 @@ class DetailInventoryController extends GetxController {
         backgroundColor: AppColor.primary,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } on AppError catch (e) {
       String message = e.message;
@@ -107,7 +107,7 @@ class DetailInventoryController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
-        borderRadius: 12,
+        borderRadius: 8,
       );
     } catch (e) {
       Get.snackbar(
@@ -116,6 +116,8 @@ class DetailInventoryController extends GetxController {
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isTogglingAvailability.value = false;

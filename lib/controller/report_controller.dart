@@ -51,8 +51,10 @@ class ReportController extends GetxController {
         "Error",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } catch (e) {
       print("error rek $e");
@@ -65,8 +67,10 @@ class ReportController extends GetxController {
         "Error",
         "Terjadi kesalahan",
         snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: const Color(0xFFE57373),
         colorText: Colors.white,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 8,
       );
     } finally {
       isLoading.value = false;
