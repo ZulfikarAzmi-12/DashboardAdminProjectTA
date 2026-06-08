@@ -61,18 +61,16 @@ class LocationPage extends StatelessWidget {
 
                     return SlideCard(
                       title: item.locationName,
-                      isActive: !(item.isActive ?? false),
+                      isActive: item.isActive ?? false, // ✅ hapus negasi !
 
                       actions: [
                         /// EDIT BUTTON
                         SlideActionButton(
                           backgroundColor: const Color(0xffF97316),
-
                           onTap: () {
                             showEditLocationDialog(
                               context: context,
                               initialValue: item.locationName,
-
                               onSave: (value) {
                                 controller.updateLocation(
                                   locationId: item.id,
@@ -81,7 +79,6 @@ class LocationPage extends StatelessWidget {
                               },
                             );
                           },
-
                           child: const Icon(
                             Icons.edit_outlined,
                             color: Colors.white,
@@ -91,20 +88,24 @@ class LocationPage extends StatelessWidget {
 
                         /// ON OFF BUTTON
                         SlideActionButton(
-                          backgroundColor: !(item.isActive ?? false)
-                              ? const Color(0xff65B741)
-                              : const Color(0xffEF4444),
+                          // ✅ isActive true  → tampil OFF (merah)
+                          // ✅ isActive false → tampil ON  (hijau)
+                          backgroundColor: (item.isActive ?? false)
+                              ? const Color(0xffEF4444)
+                              : const Color(0xff65B741),
 
                           onTap: () {
                             controller.updateLocation(
                               locationId: item.id,
-                              isActive: !(item.isActive ?? false),
+                              isActive:
+                                  !(item.isActive ?? false), // toggle nilai
                             );
                           },
 
                           child: Text(
-                            !(item.isActive ?? false) ? "ON" : "OFF",
-
+                            (item.isActive ?? false)
+                                ? "OFF"
+                                : "ON", // ✅ sesuai status
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

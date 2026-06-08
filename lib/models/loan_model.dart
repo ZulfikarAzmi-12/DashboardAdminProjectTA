@@ -6,6 +6,7 @@ class LoanData {
   final String borrowedDate;
   final String returnDate;
   final String status;
+  final String? rejectionReason;
 
   LoanData({
     required this.id,
@@ -15,6 +16,7 @@ class LoanData {
     required this.borrowedDate,
     required this.returnDate,
     required this.status,
+    this.rejectionReason,
   });
 
   factory LoanData.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class LoanData {
       borrowedDate: json['borrowedDate'],
       returnDate: json['returnDate'],
       status: json['status'],
+      rejectionReason: json['rejectionReason'],
     );
   }
 }

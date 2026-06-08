@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/models/user_model.dart';
 import 'package:admin_dashboard/networks/api.network.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
+import 'package:get/route_manager.dart';
+import 'package:get/state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +26,9 @@ class AccountService {
       );
 
       final json = jsonDecode(response.body);
-
+      if (response.statusCode == 404 && json['status'] != 'success') {
+        Get.offAllNamed(AppRoutes.login);
+      }
       if (response.statusCode == 200 && json['status'] == 'success') {
         return AccountModel.fromJson(json['data']);
       }

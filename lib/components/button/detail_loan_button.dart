@@ -3,35 +3,34 @@ import 'package:flutter/material.dart';
 class DetailLoanButton extends StatelessWidget {
   final String title;
   final Color backgroundColor;
+  final Color textColor;
   final VoidCallback onTap;
 
   const DetailLoanButton({
-    super.key,
+    Key? key,
     required this.title,
     required this.backgroundColor,
     required this.onTap,
-  });
+    this.textColor = Colors.white,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          elevation: 4,
-          shadowColor: Colors.black26,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 52,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(12),
         ),
+        alignment: Alignment.center,
         child: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: textColor,
           ),
         ),
       ),

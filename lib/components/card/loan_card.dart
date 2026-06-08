@@ -1,4 +1,3 @@
-import 'package:admin_dashboard/components/button/home_button.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/loan_model.dart';
 import 'package:admin_dashboard/utils/text_util.dart';
@@ -10,132 +9,149 @@ class LoanCard extends StatelessWidget {
 
   const LoanCard({super.key, required this.data, required this.onPresed});
 
-  Color getStatusColor() {
-    switch (data.status) {
+  Color getStatusBackgroundColor() {
+    switch (data.status.toLowerCase()) {
       case "pending":
-      case "Pending":
-        return AppColor.pending;
+        return const Color(0xFFE6E7EB);
       case "dipinjam":
-      case "Dipinjam":
-        return AppColor.dipinjam;
-      case "dikembalikan":
-      case "Dikembalikan":
-        return AppColor.gray;
-      case "terlambat":
-      case "Terlambat":
+        return const Color(0xFFDBFCE7);
       case "ditolak":
-        return AppColor.terlambat;
+        return const Color(0xFFFEE2E1);
+      case "terlambat":
+        return const Color(0xFFFEF3C6);
+      case "dikembalikan":
+      case "kembali":
+        return const Color(0xFFD9D9D9);
       default:
-        return AppColor.gray;
+        return const Color(0xFFE6E7EB);
     }
   }
 
+  Color getStatusTextColor() {
+    switch (data.status.toLowerCase()) {
+      case "pending":
+        return const Color(0xFF6B7280);
+      case "dipinjam":
+        return const Color(0xFF16A34A);
+      case "ditolak":
+        return const Color(0xFFDC2626);
+      case "terlambat":
+        return const Color(0xFFD97706);
+      case "dikembalikan":
+      case "kembali":
+        return const Color(0xFF6B7280);
+      default:
+        return const Color(0xFF6B7280);
+    }
+  }
+
+  bool get isDitolak => data.status.toLowerCase() == "ditolak";
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      decoration: BoxDecoration(
-        color: AppColor.background,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2)),
-        ],
-      ),
-
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Container(
-              width: 4,
-              decoration: BoxDecoration(
-                color: getStatusColor(),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(14),
-                  bottomLeft: Radius.circular(14),
+    return GestureDetector(
+      onTap: onPresed,
+      child: Container(
+        margin: const EdgeInsets.only(top: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// Status Badge
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: getStatusBackgroundColor(),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  data.status,
+                  style: TextStyle(
+                    color: getStatusTextColor(),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
 
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              /// Item Name
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Text(
+                  data.unit.item.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+
+              /// Borrower & Schedule
+              Container(
+                margin: const EdgeInsets.only(top: 6),
+                child: Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: getStatusColor(),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            data.status,
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ),
-
-                        Text(
-                          data.loanCode,
-                          style: TextStyle(
-                            color: AppColor.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Text(
-                        data.unit.item.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: AppColor.primary,
-                        ),
+                    Text(
+                      data.user.username,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColor.blacktext,
                       ),
                     ),
-
-                    Container(
-                      margin: EdgeInsets.only(top: 4),
-                      child: Text(
-                        "Dipinjam oleh: ${data.user.username}",
-                        style: TextStyle(fontSize: 12, color: AppColor.gray),
-                      ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      child: Text("|", style: TextStyle(color: Colors.black26)),
                     ),
-
-                    Container(
-                      margin: EdgeInsets.only(top: 6),
+                    Expanded(
                       child: Text(
                         TextUtil.loanSchedule(
                           DateTime.parse(data.borrowedDate).toLocal(),
                           DateTime.parse(data.returnDate).toLocal(),
                         ),
-                        style: TextStyle(color: AppColor.gray),
-                      ),
-                    ),
-
-                    /// BUTTON
-                    Container(
-                      margin: EdgeInsets.only(top: 12),
-                      width: double.infinity,
-                      child: HomeButton(
-                        text: "Lihat Detail",
-                        onPressed: onPresed,
-                        isOutline: true,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColor.blacktext,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+
+              /// Rejection Reason (only if ditolak)
+              if (isDitolak &&
+                  data.rejectionReason != null &&
+                  data.rejectionReason!.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.only(top: 6),
+                  child: Text(
+                    data.rejectionReason!,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColor.blacktext,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

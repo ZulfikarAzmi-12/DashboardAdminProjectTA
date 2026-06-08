@@ -4,6 +4,7 @@ class LoanDetailModel {
   final String loanCode;
   final String borrowedDate;
   final String returnDate;
+  final String actualReturnDate;
   final LoanUnitModel unit;
   final LoanUserModel user;
   final String purpose;
@@ -17,6 +18,7 @@ class LoanDetailModel {
     required this.unit,
     required this.user,
     required this.purpose,
+    required this.actualReturnDate,
   });
 
   factory LoanDetailModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class LoanDetailModel {
       unit: LoanUnitModel.fromJson(json['unit'] as Map<String, dynamic>),
       user: LoanUserModel.fromJson(json['user'] as Map<String, dynamic>),
       purpose: json['purpose'] as String,
+      actualReturnDate: json['actualReturnDate'] as String,
     );
   }
 

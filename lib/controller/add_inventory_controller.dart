@@ -63,7 +63,7 @@ class AddInventoryController extends GetxController {
 
       final locations = await inventarisService.getLocations();
 
-      locationList.value = locations;
+      locationList.value = locations.where((e) => e.isActive == true).toList();
     } on AppError catch (e) {
       Get.snackbar("Error", e.message, snackPosition: SnackPosition.TOP);
     } catch (e) {

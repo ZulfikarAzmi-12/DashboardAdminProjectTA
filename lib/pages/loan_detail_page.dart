@@ -2,7 +2,6 @@ import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/button/detail_loan_button.dart';
 import 'package:admin_dashboard/components/card/detail_loan_card.dart';
 import 'package:admin_dashboard/components/card/inventory_loan_card.dart';
-import 'package:admin_dashboard/components/status/detail_loan_status.dart';
 import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/controller/loan_detail_controller.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +17,9 @@ class LoanDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: CustomAppBar(
-        title: "Detail Peminjaman",
+        title: '',
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColor.primary),
+          icon: const Icon(Icons.arrow_back, color: AppColor.primary),
           onPressed: () => Get.back(),
         ),
       ),
@@ -44,48 +43,102 @@ class LoanDetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// STATUS + LOAN CODE (Header)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DetailLoanStatus(status: loan.status),
-                          Text(
-                            loan.loanCode,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-
+                      // 1. Inventory Card
                       InventoryLoanCard(
                         itemName: loan.itemName,
                         itemCode: loan.itemCode,
                         imageUrl: loan.imageUrl,
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 12),
 
+                      // 2. Peminjam Card
+                      _buildBorrowerCard(loan),
+                      const SizedBox(height: 12),
+
+                      // 3. Detail Peminjaman Card
                       DetailLoanCard(
-                        borrowerName: loan.borrowerName,
-                        borrowerPhone: loan.borrowerPhone,
+                        loanCode: loan.loanCode,
+                        status: loan.status,
                         borrowDate: loan.borrowDate,
                         returnDate: loan.returnDate,
                         loanPurpose: loan.loanPurpose,
+                        acctualReturnDate: loan.actualReturnDate,
                       ),
-                      const SizedBox(height: 28),
+                      const SizedBox(height: 24),
                     ],
                   ),
                 ),
               ),
 
-              _buildActionButtons(loan.status),
+              // 4. Action Buttons
+              Obx(() => _buildActionButtons(loan.status)),
             ],
           ),
         );
       }),
+    );
+  }
+
+  /// Card Peminjam (nama + telepon)
+  Widget _buildBorrowerCard(loan) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Peminjam',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: AppColor.blacktext,
+            ),
+          ),
+          const SizedBox(height: 12),
+          _infoRow('Nama :', loan.borrowerName),
+          const SizedBox(height: 8),
+          _infoRow('Telpon :', loan.borrowerPhone),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 14,
+            color: AppColor.blacktext,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColor.blacktext,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -98,32 +151,29 @@ class LoanDetailPage extends StatelessWidget {
     }
 
     switch (status.toLowerCase()) {
-      // ── Pending → Tolak + Setujui
       case "pending":
         return Row(
           children: [
             Expanded(
               child: DetailLoanButton(
                 title: 'Tolak',
-                backgroundColor: AppColor.primary,
-                onTap: () {
-                  controller.rejectLoan();
-                },
+                backgroundColor: const Color(0xFFFEE2E1),
+                textColor: const Color(0xFF424242),
+                onTap: controller.rejectLoan,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: DetailLoanButton(
                 title: 'Setujui',
-                backgroundColor: AppColor.dipinjam,
-                onTap: () {
-                  controller.approveLoan();
-                },
+                backgroundColor: const Color(0xFFDBFCE7),
+                textColor: const Color(0xFF424242),
+                onTap: controller.approveLoan,
               ),
             ),
           ],
         );
-      // ── Dipinjam / Terlambat → Pengembalian
+
       case "dipinjam":
       case "terlambat":
         return SizedBox(
@@ -131,9 +181,8 @@ class LoanDetailPage extends StatelessWidget {
           child: DetailLoanButton(
             title: 'Pengembalian',
             backgroundColor: AppColor.dipinjam,
-            onTap: () {
-              controller.returnLoan();
-            },
+            textColor: Colors.white,
+            onTap: controller.returnLoan,
           ),
         );
 

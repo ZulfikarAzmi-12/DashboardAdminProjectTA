@@ -98,16 +98,17 @@ class DetailReportPage extends StatelessWidget {
                   ),
                 ),
 
-                Container(
-                  margin: const EdgeInsets.only(top: 100),
-                  child: LongButton(
-                    text: controller.buttonLabel,
-                    backgroundColor: controller.isPending
-                        ? AppColor.pending
-                        : AppColor.primary,
-                    onPressed: controller.processReport,
+                if (data.status != 'selesai')
+                  Container(
+                    margin: const EdgeInsets.only(top: 100),
+                    child: LongButton(
+                      text: controller.buttonLabel,
+                      backgroundColor: controller.isPending
+                          ? AppColor.pending
+                          : AppColor.primary,
+                      onPressed: controller.processReport,
+                    ),
                   ),
-                ),
               ],
             ),
           );

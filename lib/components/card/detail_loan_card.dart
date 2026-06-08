@@ -2,30 +2,50 @@ import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:flutter/material.dart';
 
 class DetailLoanCard extends StatelessWidget {
-  final String borrowerName;
-  final String borrowerPhone;
-  final String borrowDate;
+  final String loanCode;
+  final String status;
+  final String borrowDate; // "16 Mei 2026, 06:00 s.d. 17 Mei 2026, 12:00"
   final String returnDate;
+  final String acctualReturnDate;
   final String loanPurpose;
 
   const DetailLoanCard({
     Key? key,
-    required this.borrowerName,
-    required this.borrowerPhone,
+    required this.loanCode,
+    required this.status,
     required this.borrowDate,
     required this.returnDate,
     required this.loanPurpose,
+    required this.acctualReturnDate,
   }) : super(key: key);
+
+  Color get _statusColor {
+    switch (status.toLowerCase()) {
+      case "pending":
+        return AppColor.pending;
+      case "dipinjam":
+        return AppColor.dipinjam;
+      case "terlambat":
+        return AppColor.terlambat;
+      case "ditolak":
+        return AppColor.terlambat;
+      case "dikembalikan":
+        return AppColor.gray;
+      default:
+        return AppColor.gray;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColor.background,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: AppColor.blacktext,
+            color: Colors.black.withOpacity(0.08),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -35,113 +55,145 @@ class DetailLoanCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// SECTION 1: INFORMASI PEMINJAM
-          const Text(
-            'Informasi Peminjam',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: AppColor.blacktext,
-            ),
-          ),
-          const SizedBox(height: 12),
-          _buildInfoRow('Nama:', borrowerName),
-          const SizedBox(height: 8),
-          _buildInfoRow('No Telepon:', borrowerPhone),
-
-          const SizedBox(height: 20),
-          Divider(color: AppColor.lightgray, height: 1),
-          const SizedBox(height: 20),
-
-          /// SECTION 2: DETAIL PEMINJAMAN
+          /// Header: Judul
           const Text(
             'Detail Peminjaman',
             style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
               color: AppColor.blacktext,
             ),
           ),
           const SizedBox(height: 12),
 
-          /// Tanggal Pinjam & Tanggal Kembali
+          /// Status + Loan Code
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tanggal Pinjam:',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: AppColor.gray,
-                      ),
+              Row(
+                children: [
+                  const Text(
+                    'Status : ',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColor.blacktext,
+                      fontWeight: FontWeight.w500,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      borrowDate,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blacktext,
-                      ),
+                  ),
+                  Text(
+                    status,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: _statusColor,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tanggal Kembali:',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: AppColor.gray,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      returnDate,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blacktext,
-                      ),
-                    ),
-                  ],
+              Text(
+                loanCode,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.blacktext, // merah
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 14),
 
-          const SizedBox(height: 16),
+          /// Tanggal Pinjam Box — menampilkan borrowDate s.d. returnDate
+          _dateBoxRange(
+            label: 'Tanggal Pinjam',
+            startValue: borrowDate,
+            endValue: returnDate,
+          ),
+          const SizedBox(height: 10),
 
-          /// Keterangan/Tujuan
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          /// Tanggal Kembali Box — actual return date
+          _dateBox(label: 'Tanggal Kembali', value: acctualReturnDate),
+          const SizedBox(height: 14),
+
+          /// Keperluan
+          const Text(
+            'Keperluan',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColor.blacktext,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            loanPurpose,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColor.blacktext,
+              height: 1.5,
+            ),
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dateBoxRange({
+    required String label,
+    required String startValue,
+    required String endValue,
+  }) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFFE0E0E0), width: 1.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColor.blacktext,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Row(
             children: [
               Text(
-                'Keterangan:',
-                style: TextStyle(
-                  fontSize: 15,
+                startValue,
+                style: const TextStyle(
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey[700],
+                  color: AppColor.blacktext,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                loanPurpose,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF424242),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  's.d.',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blacktext,
+                  ),
                 ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+              ),
+              Expanded(
+                child: Text(
+                  endValue,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blacktext,
+                  ),
+                ),
               ),
             ],
           ),
@@ -150,28 +202,36 @@ class DetailLoanCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey[700],
+  Widget _dateBox({required String label, required String value}) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFFE0E0E0), width: 1.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColor.blacktext,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF212121),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColor.blacktext,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

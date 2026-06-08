@@ -160,10 +160,21 @@ class LocationController extends GetxController {
         locationList[index] = result;
         locationList.refresh();
       }
+      String successMessage;
+
+      if (locationName != null && isActive == null) {
+        successMessage = "Berhasil mengubah nama lokasi";
+      } else if (isActive != null) {
+        successMessage = isActive
+            ? "Berhasil mengaktifkan lokasi"
+            : "Berhasil menonaktifkan lokasi";
+      } else {
+        successMessage = "Berhasil memperbarui lokasi";
+      }
 
       Get.snackbar(
         "Success",
-        "Berhasil update lokasi",
+        successMessage,
         snackPosition: SnackPosition.TOP,
         backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,

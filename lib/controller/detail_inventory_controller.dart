@@ -1,4 +1,3 @@
-import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/detail_inventory_model.dart';
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/services/detail_inventory_service.dart';
