@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/constants/app_color.dart';
 import 'package:admin_dashboard/models/detail_loan_model.dart';
 import 'package:admin_dashboard/models/error_model.dart';
 import 'package:admin_dashboard/routes/app_routes.dart';
@@ -82,7 +83,7 @@ class LoanDetailController extends GetxController {
           children: [
             const Text(
               "Masukkan alasan penolakan:",
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: TextStyle(fontSize: 14, color: AppColor.gray),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -90,13 +91,13 @@ class LoanDetailController extends GetxController {
               maxLines: 3,
               decoration: InputDecoration(
                 hintText: "Contoh: Stok tidak tersedia...",
-                hintStyle: const TextStyle(color: Colors.grey, fontSize: 13),
+                hintStyle: const TextStyle(color: AppColor.gray, fontSize: 13),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: Color(0xFF8B2323)),
+                  borderSide: const BorderSide(color: AppColor.primary),
                 ),
                 contentPadding: const EdgeInsets.all(12),
               ),
@@ -107,7 +108,7 @@ class LoanDetailController extends GetxController {
           // Batal
           TextButton(
             onPressed: () => Get.back(),
-            child: const Text("Batal", style: TextStyle(color: Colors.grey)),
+            child: const Text("Batal", style: TextStyle(color: AppColor.gray)),
           ),
           // Konfirmasi tolak
           Obx(
@@ -121,7 +122,7 @@ class LoanDetailController extends GetxController {
                           "Perhatian",
                           "Alasan penolakan tidak boleh kosong",
                           snackPosition: SnackPosition.TOP,
-                          backgroundColor: const Color(0xFFFFA726),
+                          backgroundColor: Colors.orange,
                           colorText: Colors.white,
                           margin: const EdgeInsets.all(12),
                           borderRadius: 8,
@@ -131,7 +132,7 @@ class LoanDetailController extends GetxController {
                       await _doRejectLoan(reason);
                     },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF8B2323),
+                backgroundColor: AppColor.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -188,7 +189,7 @@ class LoanDetailController extends GetxController {
         "Berhasil",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: const Color(0xFF66BB6A),
+        backgroundColor: Colors.green,
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
         borderRadius: 8,
@@ -212,7 +213,7 @@ class LoanDetailController extends GetxController {
       title,
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: const Color(0xFFE57373),
+      backgroundColor: Colors.red,
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
       borderRadius: 8,
@@ -224,7 +225,7 @@ class LoanDetailController extends GetxController {
       "Error",
       "Terjadi kesalahan, coba lagi nanti",
       snackPosition: SnackPosition.TOP,
-      backgroundColor: const Color(0xFFE57373),
+      backgroundColor: Colors.red,
       colorText: Colors.white,
       margin: const EdgeInsets.all(12),
       borderRadius: 8,
