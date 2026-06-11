@@ -87,7 +87,7 @@ class DetailInventoryController extends GetxController {
         "Berhasil",
         message,
         snackPosition: SnackPosition.TOP,
-        backgroundColor: AppColor.primary,
+        backgroundColor: const Color(0xFF66BB6A),
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
         borderRadius: 8,

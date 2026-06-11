@@ -33,4 +33,20 @@ class NotifController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> markAsRead(String notifId) async {
+    try {
+      await _notifService.readNotification(notifId);
+
+      final idx = daftarNotif.indexWhere((n) => n.id == notifId);
+      if (idx != -1) {
+        daftarNotif[idx] = daftarNotif[idx].copyWith(isRead: true);
+        daftarNotif.refresh();
+      }
+    } on AppError catch (e) {
+      errorMessage.value = e.message;
+    } catch (e) {
+      errorMessage.value = 'Terjadi kesalahan saat mengubah status notifikasi';
+    }
+  }
 }

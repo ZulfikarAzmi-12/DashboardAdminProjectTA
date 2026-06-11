@@ -40,7 +40,7 @@ class SummaryCard extends StatelessWidget {
             child: Text(
               value,
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColor.primary,
               ),

@@ -77,4 +77,45 @@ class NotifService {
       print("Error init FCM token: $e");
     }
   }
+
+  Future<void> readNotification(String notifId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("accessToken");
+
+      final response = await http.patch(
+        Uri.parse("$BASE_URL/$notifId"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+          "ngrok-skip-browser-warning": "true",
+        },
+      );
+
+      final json = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && json['status'] == 'success') {
+        return;
+      }
+
+      throw AppError(
+        status: json['status'] ?? 'failed',
+        statusCode: json['statusCode'],
+        message: json['message'],
+        error: json['error'],
+        errors: json['errors'],
+      );
+    } catch (e) {
+      if (e is AppError) rethrow;
+
+      print("error readNotification: $e");
+
+      throw AppError(
+        status: "error",
+        statusCode: 500,
+        message: "Terjadi kesalahan saat mengubah status notifikasi",
+        error: e,
+      );
+    }
+  }
 }

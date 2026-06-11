@@ -72,7 +72,7 @@ class LoanCard extends StatelessWidget {
               /// Status Badge
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+                  horizontal: 20,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
@@ -83,8 +83,8 @@ class LoanCard extends StatelessWidget {
                   data.status,
                   style: TextStyle(
                     color: getStatusTextColor(),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
@@ -95,8 +95,8 @@ class LoanCard extends StatelessWidget {
                 child: Text(
                   data.unit.item.name,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
                     color: Colors.black87,
                   ),
                 ),
@@ -110,8 +110,9 @@ class LoanCard extends StatelessWidget {
                     Text(
                       data.user.username,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 15,
                         color: AppColor.blacktext,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     const Padding(
@@ -125,8 +126,9 @@ class LoanCard extends StatelessWidget {
                           DateTime.parse(data.returnDate).toLocal(),
                         ),
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 15,
                           color: AppColor.blacktext,
+                          fontWeight: FontWeight.w400,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),

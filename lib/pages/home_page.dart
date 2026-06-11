@@ -53,12 +53,12 @@ class HomePage extends StatelessWidget {
                     const Text(
                       "Ringkasan",
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColor.blacktext,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
 
                     Wrap(
                       spacing: 12,
@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                     ),
 
                     Container(
-                      margin: const EdgeInsets.only(top: 15),
+                      margin: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Row(
                         children: [
                           Expanded(
@@ -121,14 +121,14 @@ class HomePage extends StatelessWidget {
                     ),
 
                     Container(
-                      margin: const EdgeInsets.only(top: 15),
+                      margin: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
                             "Peminjaman",
                             style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: AppColor.blacktext,
                             ),

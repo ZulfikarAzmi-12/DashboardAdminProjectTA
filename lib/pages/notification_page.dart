@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/components/appbar/appbar.dart';
 import 'package:admin_dashboard/components/card/notification_card.dart';
 import 'package:admin_dashboard/controller/notification_controller.dart';
+import 'package:admin_dashboard/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,13 @@ class NotifPage extends StatelessWidget {
         title: "",
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
+          onPressed: () {
+            if (Get.previousRoute.isEmpty) {
+              Get.offAllNamed(AppRoutes.main);
+            } else {
+              Get.back();
+            }
+          },
         ),
       ),
       body: Obx(() {
@@ -96,7 +103,10 @@ class NotifPage extends StatelessWidget {
             itemCount: controller.daftarNotif.length,
             itemBuilder: (context, index) {
               final notif = controller.daftarNotif[index];
-              return NotifCard(notif: notif);
+              return NotifCard(
+                notif: notif,
+                onTap: () => controller.markAsRead(notif.id),
+              );
             },
           ),
         );

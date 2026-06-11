@@ -23,4 +23,13 @@ class NotifModel {
   Map<String, dynamic> toJson() {
     return {'id': id, 'title': title, 'body': body, 'isRead': isRead};
   }
+
+  NotifModel copyWith({String? id, String? title, String? body, bool? isRead}) {
+    return NotifModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      isRead: isRead ?? this.isRead,
+    );
+  }
 }
